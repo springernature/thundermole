@@ -49,7 +49,12 @@ describe('lib/thundermole', function () {
 		var instance, options;
 
 		beforeEach(function () {
-			options = {};
+			options = {
+				routes: {
+					foo: 'http://foo.api/',
+					default: 'http://default.api/'
+				}
+			};
 			instance = thundermole(options);
 		});
 
@@ -58,6 +63,14 @@ describe('lib/thundermole', function () {
 			assert.deepEqual(underscore.defaults.firstCall.args[0], {});
 			assert.strictEqual(underscore.defaults.firstCall.args[1], options);
 			assert.strictEqual(underscore.defaults.firstCall.args[2], thundermole.defaults);
+		});
+
+		it('should throw if no default route is defined in the options', function () {
+			assert.throws(function () {
+				thundermole({
+					routes: {}
+				});
+			}, 'No default route is defined');
 		});
 
 		it('should create an HTTP proxy', function () {
