@@ -130,7 +130,7 @@ describe('lib/api', function () {
 
 		beforeEach(function () {
 			incomingRequest = new http.IncomingMessage();
-			incomingRequest.url = 'request-url';
+			incomingRequest.url = 'http://example.com/foo/bar?baz=qux';
 			incomingRequest.headers.cookie = 'cookies!';
 			routes = {
 				foo: 'foo-route'
@@ -145,13 +145,21 @@ describe('lib/api', function () {
 
 		describe('returned object', function () {
 
+			it('should have a `method` property set to "GET"', function () {
+				assert.strictEqual(builtRequest.method, 'GET');
+			});
+
 			it('should have a `url` property set to the output of `buildApiRequestUrl`', function () {
 				assert.isTrue(api.buildApiRequestUrl.withArgs(incomingRequest.url, routes).calledOnce);
 				assert.strictEqual(builtRequest.url, 'foo');
 			});
 
-			it('should have a `method` property set to "GET"', function () {
-				assert.strictEqual(builtRequest.method, 'GET');
+			it('should have a `qs` property set to an object', function () {
+				assert.isObject(builtRequest.qs);
+			});
+
+			it('should have a `qs.resource` property set to the path/query of the original request', function () {
+				assert.strictEqual(builtRequest.qs.resource, '/foo/bar?baz=qux');
 			});
 
 			it('should have a `headers` property set to an object', function () {
