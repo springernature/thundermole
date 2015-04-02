@@ -1,0 +1,39 @@
+{
+	"name": "thundermole",
+	"version": "0.0.0",
+	"private": true,
+
+	"description": "Proxy requests to different applications based on an API response",
+	"keywords": [ "api", "router", "proxy" ],
+	"author": "Nature Publishing Group",
+	"contributors": [
+		"Rowan Manning (http://rowanmanning.com/)"
+	],
+
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nature/thundermole.git"
+	},
+	"homepage": "https://github.com/nature/thundermole",
+	"bugs": "https://github.com/nature/thundermole/issues",
+	"license": "MIT",
+
+	"engines": {
+		"node": ">=0.10"
+	},
+	"dependencies": {
+		"http-proxy": "~1.10",
+		"underscore": "~1.8"
+	},
+	"devDependencies": {
+		"jshint": "~2.6",
+		"mocha": "~2.2",
+		"mockery": "~1.4",
+		"proclaim": "~3.2",
+		"sinon": "~1.14"
+	},
+
+	"main": "./lib/thundermole.js",
+	"bin": {},
+	"scripts": {}
+}
