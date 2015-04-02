@@ -7,7 +7,9 @@ var clientRequest = {
 	setHeader: sinon.spy()
 };
 
-var incomingMessage = {};
+var incomingMessage = {
+	headers: {}
+};
 
 var serverResponse = {
 	statusCode: 200,

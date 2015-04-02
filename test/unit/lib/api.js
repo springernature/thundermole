@@ -131,6 +131,7 @@ describe('lib/api', function () {
 		beforeEach(function () {
 			incomingRequest = new http.IncomingMessage();
 			incomingRequest.url = 'request-url';
+			incomingRequest.headers.cookie = 'cookies!';
 			routes = {
 				foo: 'foo-route'
 			};
@@ -159,6 +160,10 @@ describe('lib/api', function () {
 
 			it('should have a `headers.Accept` property set to "application/json"', function () {
 				assert.deepEqual(builtRequest.headers.Accept, 'application/json');
+			});
+
+			it('should have a `headers.Cookie` property set to the cookies from the original request', function () {
+				assert.deepEqual(builtRequest.headers.Cookie, 'cookies!');
 			});
 
 			it('should have a `json` property set to `true`', function () {
