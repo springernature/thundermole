@@ -39,6 +39,7 @@
 		"thundermole": "./bin/thundermole"
 	},
 	"scripts": {
-		"start": "./bin/thundermole"
+		"start": "./bin/thundermole",
+		"test": "make ci"
 	}
 }
