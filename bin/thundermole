@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+'use strict';
+
+var thundermole = require('..');
+
+var routes = {};
+try {
+	routes = require('../config/routes.json');
+} catch (error) {}
+
+var mole = thundermole({
+	routes: routes
+});
+
+mole.listen(process.env.PORT || 3000, function () {
+	console.log('ThunderMole started');
+});

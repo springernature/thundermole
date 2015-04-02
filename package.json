@@ -35,6 +35,10 @@
 	},
 
 	"main": "./lib/thundermole.js",
-	"bin": {},
-	"scripts": {}
+	"bin": {
+		"thundermole": "./bin/thundermole"
+	},
+	"scripts": {
+		"start": "./bin/thundermole"
+	}
 }
