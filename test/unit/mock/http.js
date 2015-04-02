@@ -10,6 +10,7 @@ var clientRequest = {
 var incomingMessage = {};
 
 var serverResponse = {
+	statusCode: 200,
 	writeHead: sinon.spy(),
 	end: sinon.spy()
 };

@@ -19,7 +19,7 @@ describe('lib/thundermole', function () {
 		underscore = require('../mock/underscore');
 		mockery.registerMock('underscore', underscore);
 
-		thundermole = require('../../..');
+		thundermole = require('../../../lib/thundermole');
 
 	});
 
