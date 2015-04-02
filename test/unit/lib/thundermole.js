@@ -6,9 +6,12 @@ var assert = require('proclaim');
 var mockery = require('mockery');
 
 describe('lib/thundermole', function () {
-	var http, httpProxy, thundermole, underscore;
+	var api, http, httpProxy, thundermole, underscore;
 
 	beforeEach(function () {
+
+		api = require('../mock/api');
+		mockery.registerMock('./api', api);
 
 		http = require('../mock/http');
 		mockery.registerMock('http', http);
@@ -147,7 +150,81 @@ describe('lib/thundermole', function () {
 		});
 
 		describe('HTTP server "request" handler', function () {
-			it('should do things');
+			var request, response, serverRequestHandler;
+
+			beforeEach(function () {
+				request = new http.IncomingMessage();
+				response = new http.ServerResponse();
+				serverRequestHandler = http.createServer.firstCall.args[0];
+				serverRequestHandler(request, response);
+			});
+
+			it('should call the API', function () {
+				assert.isTrue(api.get.withArgs(request, options.routes).calledOnce);
+				assert.isFunction(api.get.firstCall.args[2]);
+			});
+
+			describe('API "response" handler', function () {
+				var apiResponse, apiResponseHandler;
+
+				beforeEach(function () {
+					apiResponse = {
+						target: 'foo-target',
+						append: {
+							foo: 'foo-append',
+							bar: 'bar-append'
+						},
+						nonStandardProperty: true
+					};
+					apiResponseHandler = api.get.firstCall.args[2];
+				});
+
+				describe('when API call is successful', function () {
+
+					beforeEach(function () {
+						apiResponseHandler(null, apiResponse);
+					});
+
+					it('should proxy the original request', function () {
+						assert.isTrue(instance.proxy.web.withArgs(request, response).calledOnce);
+					});
+
+					it('should pass the proxy the API response `target` and `append` properties', function () {
+						assert.deepEqual(instance.proxy.web.withArgs(request, response).firstCall.args[2], {
+							target: apiResponse.target,
+							append: apiResponse.append
+						});
+					});
+
+					it('should pass the proxy any additional API response properties', function () {
+						assert.isUndefined(instance.proxy.web.withArgs(request, response).firstCall.args[2].nonStandardProperty);
+					});
+
+				});
+
+				describe('when API call is unsuccessful', function () {
+
+					beforeEach(function () {
+						apiResponseHandler(new Error(), apiResponse);
+					});
+
+				    it('should respond with a `500` status code', function () {
+						assert.isTrue(response.writeHead.withArgs(500).calledOnce);
+					});
+
+					it('should end the response', function () {
+						assert.isTrue(response.end.calledOnce);
+						assert.isString(response.end.firstCall.args[0]);
+					});
+
+					it('should not proxy the original request', function () {
+						assert.isFalse(instance.proxy.web.called);
+					});
+
+				});
+
+			});
+
 		});
 
 		it('should bind the HTTP server\'s `listen` method to the server', function () {
