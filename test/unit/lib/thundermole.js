@@ -54,8 +54,39 @@ describe('lib/thundermole', function () {
 			assert.strictEqual(underscore.defaults.firstCall.args[2], thundermole.defaults);
 		});
 
+		it('should create an HTTP proxy');
+
+		it('should add a handler for the HTTP proxy "proxyReq" event');
+
+		describe('"proxyReq" handler', function () {
+			it('should remove the `X-Proxy-Appended-Data` header from the proxy request');
+			it('should set the `X-Proxy-Appended-Data` to a JSON-serialised `proxyOptions.append`');
+			it('should set the `X-Proxy-Appended-Data` to a JSON-serialised empty object if `proxyOptions.append` is undefined');
+		});
+
+		it('should add a handler for the HTTP proxy "error" event');
+
+		describe('"error" handler', function () {
+			it('should respond with a `500` status code');
+			it('should end the response');
+		});
+
+		it('should create an HTTP server');
+
+		describe('HTTP server "request" handler', function () {
+			it('should do things');
+		});
+
+		it('should bind the HTTP server\'s `listen` method to the server');
+
 		it('should return an object', function () {
 			assert.isObject(instance);
+		});
+
+		describe('returned object', function () {
+			it('should have a `proxy` property containing the HTTP proxy');
+			it('should have a `server` property containing the HTTP server');
+			it('should have a `listen` method which aliases `server.listen`');
 		});
 
 	});
