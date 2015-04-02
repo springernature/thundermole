@@ -208,7 +208,7 @@ describe('lib/thundermole', function () {
 						apiResponseHandler(new Error(), apiResponse);
 					});
 
-				    it('should respond with a `500` status code', function () {
+					it('should respond with a `500` status code', function () {
 						assert.isTrue(response.writeHead.withArgs(500).calledOnce);
 					});
 
