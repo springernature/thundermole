@@ -34,6 +34,12 @@ foreman start -d example
 ```
 
 
+Building ThunderMole-Compatible APIs
+------------------------------------
+
+In order for ThunderMole to be able to communicate with your API, you'll need to follow the [API Specification](/docs/API-Specification.md).
+
+
 Testing
 -------
 
