@@ -3,6 +3,5 @@
 var sinon = require('sinon');
 
 module.exports = sinon.stub().returns({
-	increment: sinon.spy(),
-	timing: sinon.spy()
+	end: sinon.stub()
 });

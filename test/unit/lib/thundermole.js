@@ -6,7 +6,7 @@ var assert = require('proclaim');
 var mockery = require('mockery');
 
 describe('lib/thundermole', function () {
-	var api, http, httpProxy, StatsD, thundermole, underscore;
+	var api, createTimer, http, httpProxy, StatsD, thundermole, underscore;
 
 	beforeEach(function () {
 
@@ -21,6 +21,9 @@ describe('lib/thundermole', function () {
 
 		StatsD = require('../mock/node-statsd');
 		mockery.registerMock('node-statsd', StatsD);
+
+		createTimer = require('../mock/timer');
+		mockery.registerMock('./timer', createTimer);
 
 		underscore = require('../mock/underscore');
 		mockery.registerMock('underscore', underscore);
@@ -106,7 +109,7 @@ describe('lib/thundermole', function () {
 			assert.isFunction(instance.proxy.on.withArgs('proxyReq').firstCall.args[1]);
 		});
 
-		describe('"proxyReq" handler', function () {
+		describe('HTTP proxy "proxyReq" handler', function () {
 			var proxyOptions, proxyReqHandler, proxyRequest, request, response;
 
 			beforeEach(function () {
@@ -143,7 +146,7 @@ describe('lib/thundermole', function () {
 			assert.isFunction(instance.proxy.on.withArgs('error').firstCall.args[1]);
 		});
 
-		describe('"error" handler', function () {
+		describe('HTTP proxy "error" handler', function () {
 			var error, proxyErrorHandler, request, response;
 
 			beforeEach(function () {
@@ -152,6 +155,10 @@ describe('lib/thundermole', function () {
 				request = new http.IncomingMessage();
 				response = new http.ServerResponse();
 				proxyErrorHandler(error, request, response);
+			});
+
+			it('should increment the `proxy_error` statistic', function () {
+				assert.isTrue(instance.statsd.increment.withArgs('proxy_error').calledOnce);
 			});
 
 			it('should respond with a `500` status code', function () {
@@ -180,6 +187,14 @@ describe('lib/thundermole', function () {
 				serverRequestHandler(request, response);
 			});
 
+			it('should increment the `user_request` statistic', function () {
+				assert.isTrue(instance.statsd.increment.withArgs('user_request').calledOnce);
+			});
+
+			it('should create a timer', function () {
+				assert.isTrue(createTimer.calledOnce);
+			});
+
 			it('should call the API', function () {
 				assert.isTrue(api.get.withArgs(request, options.routes).calledOnce);
 				assert.isFunction(api.get.firstCall.args[2]);
@@ -203,7 +218,16 @@ describe('lib/thundermole', function () {
 				describe('when API call is successful', function () {
 
 					beforeEach(function () {
+						createTimer.firstCall.returnValue.end.returns(100);
 						apiResponseHandler(null, apiResponse);
+					});
+
+					it('should set the `api_response_time` statistic with the timer set in the handler', function () {
+						assert.isTrue(instance.statsd.timing.withArgs('api_response_time', 100).calledOnce);
+					});
+
+					it('should increment the `api_response` statistic', function () {
+						assert.isTrue(instance.statsd.increment.withArgs('api_response').calledOnce);
 					});
 
 					it('should proxy the original request', function () {
@@ -227,6 +251,14 @@ describe('lib/thundermole', function () {
 
 					beforeEach(function () {
 						apiResponseHandler(new Error(), apiResponse);
+					});
+
+					it('should increment the `api_response` statistic', function () {
+						assert.isTrue(instance.statsd.increment.withArgs('api_response').calledOnce);
+					});
+
+					it('should increment the `api_error` statistic', function () {
+						assert.isTrue(instance.statsd.increment.withArgs('api_error').calledOnce);
 					});
 
 					it('should respond with a `500` status code', function () {
