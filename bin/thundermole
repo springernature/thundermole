@@ -5,7 +5,8 @@ var thundermole = require('..');
 var tryRequire = require('../lib/try-require');
 
 var mole = thundermole({
-	routes: tryRequire('../config/routes.json')
+	routes: tryRequire('../config/routes.json'),
+	statsd: tryRequire('../config/statsd.json')
 });
 
 mole.listen(process.env.PORT || 3000, function () {

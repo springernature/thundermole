@@ -6,7 +6,7 @@ var assert = require('proclaim');
 var mockery = require('mockery');
 
 describe('lib/thundermole', function () {
-	var api, http, httpProxy, thundermole, underscore;
+	var api, http, httpProxy, StatsD, thundermole, underscore;
 
 	beforeEach(function () {
 
@@ -18,6 +18,9 @@ describe('lib/thundermole', function () {
 
 		httpProxy = require('../mock/http-proxy');
 		mockery.registerMock('http-proxy', httpProxy);
+
+		StatsD = require('../mock/node-statsd');
+		mockery.registerMock('node-statsd', StatsD);
 
 		underscore = require('../mock/underscore');
 		mockery.registerMock('underscore', underscore);
@@ -56,6 +59,9 @@ describe('lib/thundermole', function () {
 				routes: {
 					foo: 'http://foo.api/',
 					default: 'http://default.api/'
+				},
+				statsd: {
+					host: 'localhost'
 				}
 			};
 			instance = thundermole(options);
@@ -74,6 +80,25 @@ describe('lib/thundermole', function () {
 					routes: {}
 				});
 			}, 'No default route is defined');
+		});
+
+		it('should create a new StatsD client with the correct options', function () {
+			assert.isTrue(StatsD.calledOnce);
+			assert.isTrue(StatsD.calledWithNew());
+			assert.isTrue(StatsD.calledWith(options.statsd));
+		});
+
+		it('should store the StatsD client in the `statsd` property', function () {
+			assert.strictEqual(instance.statsd, StatsD.firstCall.returnValue);
+		});
+
+		it('should create mock StatsD client if the `statsd` option is not present', function () {
+			StatsD.reset();
+			delete options.statsd;
+			instance = thundermole(options);
+			assert.isTrue(StatsD.calledOnce);
+			assert.isTrue(StatsD.calledWithNew());
+			assert.deepEqual(StatsD.firstCall.args[0], {mock: true});
 		});
 
 		it('should create an HTTP proxy', function () {
