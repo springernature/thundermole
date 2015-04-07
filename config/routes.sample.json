@@ -1,4 +1,4 @@
 {
-	"example": "http://localhost:3001/api/routing",
-	"default": "http://localhost:3002/api/routing"
+	"backend-2": "http://localhost:3002",
+	"default": "http://localhost:3001"
 }

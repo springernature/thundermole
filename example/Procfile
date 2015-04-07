@@ -1,0 +1,5 @@
+mole: PORT=3000 ../bin/thundermole
+api-1: node api-1.js
+api-2: node api-2.js
+backend-1: node backend-1.js
+backend-2: node backend-2.js

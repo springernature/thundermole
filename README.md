@@ -8,7 +8,7 @@ Proxy requests to different applications based on an API response.
 Installing
 ----------
 
-- Install [Node.js](https://nodejs.org/)
+- Install [Node.js][node]
 - Clone this repo locally and `cd` into it
 - Copy the sample config with `cp config/routes.sample.json config/routes.json`
 - Run `make` to install dependencies and run the test suite
@@ -19,6 +19,18 @@ Running ThunderMole
 
 ```
 npm start
+```
+
+
+Running Example Applications
+----------------------------
+
+ThunderMole comes with an example application which runs two APIs and two backends. To run these you'll need to install [Foreman][foreman], or look into the example [Procfile](example/Procfile) and spin up each process separately.
+
+If you have Foreman, run the example application with:
+
+```
+foreman start -d example
 ```
 
 
@@ -36,3 +48,8 @@ License
 -------
 
 Copyright &copy; Nature Publishing Group
+
+
+
+[foreman]: https://github.com/ddollar/foreman
+[node]: https://nodejs.org/
