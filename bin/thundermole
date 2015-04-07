@@ -2,14 +2,10 @@
 'use strict';
 
 var thundermole = require('..');
-
-var routes = {};
-try {
-	routes = require('../config/routes.json');
-} catch (error) {}
+var tryRequire = require('../lib/try-require');
 
 var mole = thundermole({
-	routes: routes
+	routes: tryRequire('../config/routes.json')
 });
 
 mole.listen(process.env.PORT || 3000, function () {
