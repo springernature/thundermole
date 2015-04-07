@@ -23,11 +23,11 @@ test: test-unit test-integration
 # Run unit tests
 test-unit:
 	@echo "$(C_CYAN)> running unit tests$(C_RESET)"
-	@./node_modules/.bin/mocha ./test/unit --reporter spec --colors --recursive
+	@./node_modules/.bin/mocha ./test/unit --reporter spec --recursive
 
 # Run integration tests
 test-integration:
 	@echo "$(C_CYAN)> running integration tests$(C_RESET)"
-	@./node_modules/.bin/mocha ./test/integration --reporter spec --colors --recursive
+	@./node_modules/.bin/mocha ./test/integration --reporter spec --recursive
 
 .PHONY: test
