@@ -88,10 +88,6 @@ describe('lib/thundermole', function () {
 			assert.isTrue(StatsD.calledWith(options.statsd));
 		});
 
-		it('should store the StatsD client in the `statsd` property', function () {
-			assert.strictEqual(instance.statsd, StatsD.firstCall.returnValue);
-		});
-
 		it('should create mock StatsD client if the `statsd` option is not present', function () {
 			StatsD.reset();
 			delete options.statsd;
@@ -103,10 +99,6 @@ describe('lib/thundermole', function () {
 
 		it('should create an HTTP proxy', function () {
 			assert.isTrue(httpProxy.createProxyServer.calledOnce);
-		});
-
-		it('should store the HTTP proxy in the `proxy` property', function () {
-			assert.strictEqual(instance.proxy, httpProxy.createProxyServer.firstCall.returnValue);
 		});
 
 		it('should add a handler for the HTTP proxy "proxyReq" event', function () {
@@ -176,10 +168,6 @@ describe('lib/thundermole', function () {
 		it('should create an HTTP server', function () {
 			assert.isTrue(http.createServer.calledOnce);
 			assert.isFunction(http.createServer.firstCall.args[0]);
-		});
-
-		it('should store the HTTP server in the `server` property', function () {
-			assert.strictEqual(instance.server, http.createServer.firstCall.returnValue);
 		});
 
 		describe('HTTP server "request" handler', function () {
@@ -276,6 +264,10 @@ describe('lib/thundermole', function () {
 
 			it('should have a `server` property containing the HTTP server', function () {
 				assert.strictEqual(instance.server, http.createServer.firstCall.returnValue);
+			});
+
+			it('should have a `statsd` property containing the StatsD client', function () {
+				assert.strictEqual(instance.statsd, StatsD.firstCall.returnValue);
 			});
 
 			it('should have a `listen` method which aliases `server.listen`', function () {
