@@ -80,6 +80,10 @@ describe('lib/thundermole', function () {
 			assert.isTrue(httpProxy.createProxyServer.calledOnce);
 		});
 
+		it('should store the HTTP proxy in the `proxy` property', function () {
+			assert.strictEqual(instance.proxy, httpProxy.createProxyServer.firstCall.returnValue);
+		});
+
 		it('should add a handler for the HTTP proxy "proxyReq" event', function () {
 			assert.isTrue(instance.proxy.on.withArgs('proxyReq').calledOnce);
 			assert.isFunction(instance.proxy.on.withArgs('proxyReq').firstCall.args[1]);
@@ -147,6 +151,10 @@ describe('lib/thundermole', function () {
 		it('should create an HTTP server', function () {
 			assert.isTrue(http.createServer.calledOnce);
 			assert.isFunction(http.createServer.firstCall.args[0]);
+		});
+
+		it('should store the HTTP server in the `server` property', function () {
+			assert.strictEqual(instance.server, http.createServer.firstCall.returnValue);
 		});
 
 		describe('HTTP server "request" handler', function () {
