@@ -32,6 +32,43 @@ Options:
 ```
 
 
+JavaScript API
+--------------
+
+Thundermole can be loaded as a module and run programatically.
+
+
+### Basic API
+
+```js
+var thundermole = require('thundermole');
+
+// Create a thundermole application
+var mole = thundermole({
+    // ... options ...
+});
+
+// Start the thundermole application on port 3000
+mole.listen(3000);
+```
+
+
+### Options
+
+#### `routes` (object)
+
+Required. A simple routing hash. Each property maps to the first part of a request path, and the value should indicate the API endpoint to use for matching requests.
+
+#### `routes.default` (string)
+
+Required. The default route to use if no others match the request.
+
+#### `statsd` (object)
+
+Optional. A [node-statsd][node-statsd] configuration object, as outlined in their documentation.
+
+
+
 Running Example Applications
 ----------------------------
 
@@ -69,3 +106,4 @@ Copyright &copy; Nature Publishing Group
 
 [foreman]: https://github.com/ddollar/foreman
 [node]: https://nodejs.org/
+[node-statsd]: https://github.com/sivy/node-statsd
