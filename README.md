@@ -19,7 +19,16 @@ Running ThunderMole
 -------------------
 
 ```
-npm start
+Usage: bin/thundermole [options]
+
+Options:
+
+  -h, --help           output usage information
+  -V, --version        output the version number
+  -c, --config <path>  the directory to look for config files in
+  -C, --cluster        create a cluster of workers for handling requests
+  -p, --port <port>    the port to run on
+  -w, --workers <num>  the number of workers to add to the cluster
 ```
 
 
