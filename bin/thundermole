@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
+var cluster = require('cluster');
+var os = require('os');
 var path = require('path');
 var pkg = require('../package.json');
 var program = require('commander');
@@ -11,29 +13,54 @@ runProgram();
 
 function runProgram () {
 	program.version(pkg.version)
-		.option('-c, --config <path>', 'specify the directory to look for config files in')
-		.option('-p, --port <port>', 'specify the port to run on')
+		.option('-c, --config <path>', 'the directory to look for config files in')
+		.option('-C, --cluster', 'create a cluster of workers for handling requests')
+		.option('-p, --port <port>', 'the port to run on')
+		.option('-w, --workers <num>', 'the number of workers to add to the cluster')
 		.parse(process.argv);
 	defaultProgramProperties(program);
-	runThunderMole(program);
+	if (program.cluster && cluster.isMaster) {
+		runThunderMoleMaster(program);
+	} else {
+		runThunderMoleWorker(program);
+	}
 }
 
 function defaultProgramProperties (program) {
 	program.config = (program.config || '../config');
+	program.cluster = !!program.cluster;
 	program.port = parseInt(program.port || process.env.PORT || 3000, 10);
+	program.workers = parseInt(program.workers || os.cpus().length, 10);
 }
 
-function runThunderMole (program) {
+function runThunderMoleMaster (program) {
+	console.log('ThunderMole Master running');
+    for (var i = 0; i < program.workers; i += 1) {
+        cluster.fork();
+    }
+    cluster.on('exit', handleDeadWorker);
+}
+
+function runThunderMoleWorker (program) {
+	var applicationName = 'ThunderMole';
+	if (cluster.isWorker) {
+		 applicationName += ' Worker ' + cluster.worker.id + ' (' + process.pid + ')';
+	}
 	var mole = thundermole({
 		routes: tryRequire(path.join(program.config, 'routes.json')),
 		statsd: tryRequire(path.join(program.config, 'statsd.json'))
 	});
 	mole.listen(program.port, function (error) {
 		if (error) {
-			console.error('ThunderMole failed to start:');
+			console.error('%s failed to start:', applicationName);
 			console.error(error.stack);
 			process.exit(1);
 		}
-		console.log('ThunderMole running on port %s', program.port);
+		console.log('%s running on port %d', applicationName, program.port);
 	});
+}
+
+function handleDeadWorker (worker) {
+    console.log('ThunderMole Worker ' + worker.id + ' died');
+    cluster.fork();
 }
