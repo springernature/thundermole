@@ -1,14 +1,39 @@
 #!/usr/bin/env node
 'use strict';
 
+var path = require('path');
+var pkg = require('../package.json');
+var program = require('commander');
 var thundermole = require('..');
 var tryRequire = require('../lib/try-require');
 
-var mole = thundermole({
-	routes: tryRequire('../config/routes.json'),
-	statsd: tryRequire('../config/statsd.json')
-});
+runProgram();
 
-mole.listen(process.env.PORT || 3000, function () {
-	console.log('ThunderMole started');
-});
+function runProgram () {
+	program.version(pkg.version)
+		.option('-c, --config <path>', 'specify the directory to look for config files in')
+		.option('-p, --port <port>', 'specify the port to run on')
+		.parse(process.argv);
+	defaultProgramProperties(program);
+	runThunderMole(program);
+}
+
+function defaultProgramProperties (program) {
+	program.config = (program.config || '../config');
+	program.port = parseInt(program.port || process.env.PORT || 3000, 10);
+}
+
+function runThunderMole (program) {
+	var mole = thundermole({
+		routes: tryRequire(path.join(program.config, 'routes.json')),
+		statsd: tryRequire(path.join(program.config, 'statsd.json'))
+	});
+	mole.listen(program.port, function (error) {
+		if (error) {
+			console.error('ThunderMole failed to start:');
+			console.error(error.stack);
+			process.exit(1);
+		}
+		console.log('ThunderMole running on port %s', program.port);
+	});
+}
