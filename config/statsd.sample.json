@@ -1,5 +1,5 @@
 {
 	"host": "localhost",
 	"port": 8125,
-	"prefix": "thundermole_"
+	"prefix": "thundermole.local."
 }
