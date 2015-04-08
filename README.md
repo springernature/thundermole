@@ -10,7 +10,8 @@ Installing
 
 - Install [Node.js][node]
 - Clone this repo locally and `cd` into it
-- Copy the sample config with `cp config/routes.sample.json config/routes.json`
+- Copy the sample routes with `cp config/routes.sample.json config/routes.json`
+- Optionally copy the sample StatsD config with `cp config/statsd.sample.json config/statsd.json`
 - Run `make` to install dependencies and run the test suite
 
 
