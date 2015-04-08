@@ -27,10 +27,12 @@ function runProgram () {
 }
 
 function defaultProgramProperties (program) {
+	var cpuCount = os.cpus().length;
 	program.config = (program.config || '../config');
 	program.cluster = !!program.cluster;
 	program.port = parseInt(program.port || process.env.PORT || 3000, 10);
-	program.workers = parseInt(program.workers || os.cpus().length, 10);
+	program.workers = parseInt(program.workers || cpuCount, 10);
+	program.workers = Math.min(program.workers, cpuCount);
 }
 
 function runThunderMoleMaster (program) {
