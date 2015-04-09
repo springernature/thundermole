@@ -4,6 +4,8 @@ ThunderMole
 
 Proxy requests to different applications based on an API response.
 
+![ThunderMole FLow Diagram](docs/Diagram.png?raw=true)
+
 
 Installing
 ----------
