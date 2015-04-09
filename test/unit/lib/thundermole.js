@@ -6,7 +6,7 @@ var assert = require('proclaim');
 var mockery = require('mockery');
 
 describe('lib/thundermole', function () {
-	var api, createTimer, http, httpProxy, StatsD, thundermole, underscore;
+	var api, createTimer, http, httpProxy, logger, StatsD, thundermole, underscore;
 
 	beforeEach(function () {
 
@@ -18,6 +18,8 @@ describe('lib/thundermole', function () {
 
 		httpProxy = require('../mock/http-proxy');
 		mockery.registerMock('http-proxy', httpProxy);
+
+		logger = require('../mock/logger');
 
 		StatsD = require('../mock/node-statsd');
 		mockery.registerMock('node-statsd', StatsD);
@@ -52,6 +54,26 @@ describe('lib/thundermole', function () {
 			assert.deepEqual(defaults.routes, {});
 		});
 
+		it('should have a `logger` property', function () {
+			assert.isObject(defaults.logger);
+		});
+
+		it('should have a `logger.debug` method', function () {
+			assert.isFunction(defaults.logger.debug);
+		});
+
+		it('should have a `logger.error` method', function () {
+			assert.isFunction(defaults.logger.error);
+		});
+
+		it('should have a `logger.info` method', function () {
+			assert.isFunction(defaults.logger.info);
+		});
+
+		it('should have a `logger.warn` method', function () {
+			assert.isFunction(defaults.logger.warn);
+		});
+
 	});
 
 	describe('thundermole()', function () {
@@ -65,7 +87,8 @@ describe('lib/thundermole', function () {
 				},
 				statsd: {
 					host: 'localhost'
-				}
+				},
+				logger: logger
 			};
 			instance = thundermole(options);
 		});
@@ -91,7 +114,7 @@ describe('lib/thundermole', function () {
 			assert.isTrue(StatsD.calledWith(options.statsd));
 		});
 
-		it('should create mock StatsD client if the `statsd` option is not present', function () {
+		it('should create a mock StatsD client if the `statsd` option is not present', function () {
 			StatsD.reset();
 			delete options.statsd;
 			instance = thundermole(options);
@@ -99,6 +122,51 @@ describe('lib/thundermole', function () {
 			assert.isTrue(StatsD.calledWithNew());
 			assert.deepEqual(StatsD.firstCall.args[0], {mock: true});
 		});
+
+		it('should throw if the `logger` option does not have a `debug` method', function () {
+			delete options.logger.debug;
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have a "debug" method');
+			options.logger.debug = '...';
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have a "debug" method');
+		});
+
+		it('should throw if the `logger` option does not have an `error` method', function () {
+			delete options.logger.error;
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have an "error" method');
+			options.logger.error = '...';
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have an "error" method');
+		});
+
+		it('should throw if the `logger` option does not have an `info` method', function () {
+			delete options.logger.info;
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have an "info" method');
+			options.logger.info = '...';
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have an "info" method');
+		});
+
+		it('should throw if the `logger` option does not have a `warn` method', function () {
+			delete options.logger.warn;
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have a "warn" method');
+			options.logger.warn = '...';
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have a "warn" method');
+		});
+
 
 		it('should create an HTTP proxy', function () {
 			assert.isTrue(httpProxy.createProxyServer.calledOnce);
@@ -300,6 +368,10 @@ describe('lib/thundermole', function () {
 
 			it('should have a `statsd` property containing the StatsD client', function () {
 				assert.strictEqual(instance.statsd, StatsD.firstCall.returnValue);
+			});
+
+			it('should have a `logger` property containing the passed in logger', function () {
+				assert.strictEqual(instance.logger, logger);
 			});
 
 			it('should have a `listen` method which aliases `server.listen`', function () {

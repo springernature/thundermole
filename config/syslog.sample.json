@@ -1,0 +1,5 @@
+{
+	"app_name": "thundermole",
+	"localhost": "local-thundermole",
+	"host": "syslog.npgsrv.com"
+}

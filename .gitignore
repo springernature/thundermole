@@ -1,4 +1,5 @@
 config/routes.json
 config/statsd.json
+config/syslog.json
 node_modules
 npm-debug.log

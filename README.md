@@ -12,6 +12,7 @@ Installing
 - Clone this repo locally and `cd` into it
 - Copy the sample routes with `cp config/routes.sample.json config/routes.json`
 - Optionally copy the sample StatsD config with `cp config/statsd.sample.json config/statsd.json`
+- Optionally copy the sample syslog config with `cp config/syslog.sample.json config/syslog.json`
 - Run `make` to install dependencies and run the test suite
 
 
@@ -30,6 +31,22 @@ Options:
   -p, --port <port>    the port to run on
   -w, --workers <num>  the number of workers to add to the cluster
 ```
+
+### Configuration
+
+`bin/thundermole` reads configurations from JSON files.
+
+#### `routes.json`
+
+Should contain application routes as outlined in the [routes option documentation](#routes-object). See [`routes.sample.json`](/config/routes.sample.json) for an example.
+
+#### `statsd.json`
+
+Optional. Should contain statsd configurations as outlined in the [statsd option documentation](#statsd-object). See [`statsd.sample.json`](/config/statsd.sample.json) for an example.
+
+#### `syslog.json`
+
+Should contain syslog configurations as outlined in the [winston-syslog documentation][winston-syslog]. See [`syslog.sample.json`](/config/syslog.sample.json) for an example.
 
 
 JavaScript API
@@ -66,6 +83,10 @@ Required. The default route to use if no others match the request.
 #### `statsd` (object)
 
 Optional. A [node-statsd][node-statsd] configuration object, as outlined in their documentation.
+
+#### `logger` (object)
+
+Optional. An object with the methods `debug`, `error`, `info`, and `warn` which will be used to report errors and request information.
 
 
 
@@ -107,3 +128,4 @@ Copyright &copy; Nature Publishing Group
 [foreman]: https://github.com/ddollar/foreman
 [node]: https://nodejs.org/
 [node-statsd]: https://github.com/sivy/node-statsd
+[winston-syslog]: https://github.com/winstonjs/winston-syslog

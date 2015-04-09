@@ -8,10 +8,13 @@ var pkg = require('../package.json');
 var program = require('commander');
 var thundermole = require('..');
 var tryRequire = require('../lib/try-require');
+var winston = require('winston');
+require('winston-syslog');
 
-runProgram();
+configureProgram(program);
+runProgram(program);
 
-function runProgram () {
+function configureProgram (program) {
 	program.version(pkg.version)
 		.option('-c, --config <path>', 'the directory to look for config files in')
 		.option('-C, --cluster', 'create a cluster of workers for handling requests')
@@ -19,10 +22,14 @@ function runProgram () {
 		.option('-w, --workers <num>', 'the number of workers to add to the cluster')
 		.parse(process.argv);
 	defaultProgramProperties(program);
+}
+
+function runProgram (program) {
+	var logger = createLogger(tryRequire(path.join(program.config, 'syslog.json')));
 	if (program.cluster && cluster.isMaster) {
-		runThunderMoleMaster(program);
+		runThunderMoleMaster(program, logger);
 	} else {
-		runThunderMoleWorker(program);
+		runThunderMoleWorker(program, logger);
 	}
 }
 
@@ -35,34 +42,44 @@ function defaultProgramProperties (program) {
 	program.workers = Math.min(program.workers, cpuCount);
 }
 
-function runThunderMoleMaster (program) {
-	console.log('ThunderMole Master running');
-    for (var i = 0; i < program.workers; i += 1) {
-        cluster.fork();
-    }
-    cluster.on('exit', handleDeadWorker);
+function createLogger (syslogConfig) {
+	var syslogConfig = tryRequire(path.join(program.config, 'syslog.json'));
+	var logger = new winston.Logger({
+		transports: [
+			new (winston.transports.Console)(),
+			new (winston.transports.Syslog)(syslogConfig)
+		]
+	});
+	return logger;
 }
 
-function runThunderMoleWorker (program) {
-	var applicationName = 'ThunderMole';
-	if (cluster.isWorker) {
-		 applicationName += ' Worker ' + cluster.worker.id + ' (' + process.pid + ')';
+function runThunderMoleMaster (program, logger) {
+	logger.info('Master process running, port: %d, pid: %d', program.port, process.pid);
+	for (var i = 0; i < program.workers; i += 1) {
+		cluster.fork();
 	}
+	cluster.on('exit', handleDeadWorker.bind(null, logger));
+}
+
+function runThunderMoleWorker (program, logger) {
 	var mole = thundermole({
+		logger: logger,
 		routes: tryRequire(path.join(program.config, 'routes.json')),
 		statsd: tryRequire(path.join(program.config, 'statsd.json'))
 	});
 	mole.listen(program.port, function (error) {
+		var workerName = 'Worker process' + (cluster.isWorker ? ' ' + cluster.worker.id : '');
 		if (error) {
-			console.error('%s failed to start:', applicationName);
-			console.error(error.stack);
-			process.exit(1);
+			return logger.error('%s failed to start: %s', workerName, error.message, function () {
+				setTimeout(function () { process.exit(1); }, 500);
+			});
 		}
-		console.log('%s running on port %d', applicationName, program.port);
+		logger.info('%s running, port: %d, pid: %d', workerName, program.port, process.pid);
 	});
 }
 
-function handleDeadWorker (worker) {
-    console.log('ThunderMole Worker ' + worker.id + ' died');
-    cluster.fork();
+// TODO write the log in the process "beforeExit" event once we can update to Node 0.12
+function handleDeadWorker (logger, worker) {
+	logger.warn('Worker process ' + worker.id + ' died');
+	cluster.fork();
 }
