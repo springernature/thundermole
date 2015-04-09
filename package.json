@@ -26,7 +26,9 @@
 		"http-proxy": "~1.10",
 		"node-statsd": "~0.1",
 		"request": "~2.54",
-		"underscore": "~1.8"
+		"underscore": "~1.8",
+		"winston": "~1.0",
+		"winston-syslog": "~1.1"
 	},
 	"devDependencies": {
 		"jshint": "~2.6",
