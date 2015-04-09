@@ -12,6 +12,7 @@ Installing
 - Clone this repo locally and `cd` into it
 - Copy the sample routes with `cp config/routes.sample.json config/routes.json`
 - Optionally copy the sample StatsD config with `cp config/statsd.sample.json config/statsd.json`
+- Optionally copy the sample syslog config with `cp config/syslog.sample.json config/syslog.json`
 - Run `make` to install dependencies and run the test suite
 
 
