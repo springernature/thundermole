@@ -32,6 +32,22 @@ Options:
   -w, --workers <num>  the number of workers to add to the cluster
 ```
 
+### Configuration
+
+`bin/thundermole` reads configurations from JSON files.
+
+#### `routes.json`
+
+Should contain application routes as outlined in the [routes option documentation](#routes-object). See [`routes.sample.json`](/config/routes.sample.json) for an example.
+
+#### `statsd.json`
+
+Optional. Should contain statsd configurations as outlined in the [statsd option documentation](#statsd-object). See [`statsd.sample.json`](/config/statsd.sample.json) for an example.
+
+#### `syslog.json`
+
+Should contain syslog configurations as outlined in the [winston-syslog documentation][winston-syslog]. See [`syslog.sample.json`](/config/syslog.sample.json) for an example.
+
 
 JavaScript API
 --------------
@@ -112,3 +128,4 @@ Copyright &copy; Nature Publishing Group
 [foreman]: https://github.com/ddollar/foreman
 [node]: https://nodejs.org/
 [node-statsd]: https://github.com/sivy/node-statsd
+[winston-syslog]: https://github.com/winstonjs/winston-syslog
