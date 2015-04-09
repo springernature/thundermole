@@ -6,7 +6,7 @@ var assert = require('proclaim');
 var mockery = require('mockery');
 
 describe('lib/thundermole', function () {
-	var api, createTimer, http, httpProxy, StatsD, thundermole, underscore;
+	var api, createTimer, http, httpProxy, logger, StatsD, thundermole, underscore;
 
 	beforeEach(function () {
 
@@ -18,6 +18,8 @@ describe('lib/thundermole', function () {
 
 		httpProxy = require('../mock/http-proxy');
 		mockery.registerMock('http-proxy', httpProxy);
+
+		logger = require('../mock/logger');
 
 		StatsD = require('../mock/node-statsd');
 		mockery.registerMock('node-statsd', StatsD);
@@ -65,7 +67,8 @@ describe('lib/thundermole', function () {
 				},
 				statsd: {
 					host: 'localhost'
-				}
+				},
+				logger: logger
 			};
 			instance = thundermole(options);
 		});
@@ -91,13 +94,23 @@ describe('lib/thundermole', function () {
 			assert.isTrue(StatsD.calledWith(options.statsd));
 		});
 
-		it('should create mock StatsD client if the `statsd` option is not present', function () {
+		it('should create a mock StatsD client if the `statsd` option is not present', function () {
 			StatsD.reset();
 			delete options.statsd;
 			instance = thundermole(options);
 			assert.isTrue(StatsD.calledOnce);
 			assert.isTrue(StatsD.calledWithNew());
 			assert.deepEqual(StatsD.firstCall.args[0], {mock: true});
+		});
+
+		it('should create a mock logger `logger` option is not present', function () {
+			delete options.logger;
+			instance = thundermole(options);
+			assert.isObject(instance.logger);
+			assert.isFunction(instance.logger.debug);
+			assert.isFunction(instance.logger.error);
+			assert.isFunction(instance.logger.info);
+			assert.isFunction(instance.logger.warn);
 		});
 
 		it('should create an HTTP proxy', function () {
@@ -300,6 +313,10 @@ describe('lib/thundermole', function () {
 
 			it('should have a `statsd` property containing the StatsD client', function () {
 				assert.strictEqual(instance.statsd, StatsD.firstCall.returnValue);
+			});
+
+			it('should have a `logger` property containing the passed in logger', function () {
+				assert.strictEqual(instance.logger, logger);
 			});
 
 			it('should have a `listen` method which aliases `server.listen`', function () {
