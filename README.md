@@ -68,6 +68,10 @@ Required. The default route to use if no others match the request.
 
 Optional. A [node-statsd][node-statsd] configuration object, as outlined in their documentation.
 
+#### `logger` (object)
+
+Optional. An object with the methods `debug`, `error`, `info`, and `warn` which will be used to report errors and request information.
+
 
 
 Running Example Applications
