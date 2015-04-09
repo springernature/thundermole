@@ -50,39 +50,36 @@ function createLogger (syslogConfig) {
 			new (winston.transports.Syslog)(syslogConfig)
 		]
 	});
-	logger.setLevels(winston.config.syslog.levels);
 	return logger;
 }
 
 function runThunderMoleMaster (program, logger) {
-	logger.info('ThunderMole Master running');
+	logger.info('Master process running, port: %d, pid: %d', program.port, process.pid);
 	for (var i = 0; i < program.workers; i += 1) {
 		cluster.fork();
 	}
-	cluster.on('exit', handleDeadWorker);
+	cluster.on('exit', handleDeadWorker.bind(null, logger));
 }
 
 function runThunderMoleWorker (program, logger) {
-	var applicationName = 'ThunderMole';
-	if (cluster.isWorker) {
-		 applicationName += ' Worker ' + cluster.worker.id + ' (' + process.pid + ')';
-	}
 	var mole = thundermole({
 		logger: logger,
 		routes: tryRequire(path.join(program.config, 'routes.json')),
 		statsd: tryRequire(path.join(program.config, 'statsd.json'))
 	});
 	mole.listen(program.port, function (error) {
+		var workerName = 'Worker process' + (cluster.isWorker ? ' ' + cluster.worker.id : '');
 		if (error) {
-			logger.error('%s failed to start:', applicationName);
-			logger.error(error.stack);
-			process.exit(1);
+			return logger.error('%s failed to start: %s', workerName, error.message, function () {
+				setTimeout(function () { process.exit(1); }, 500);
+			});
 		}
-		logger.info('%s running on port %d', applicationName, program.port);
+		logger.info('%s running, port: %d, pid: %d', workerName, program.port, process.pid);
 	});
 }
 
-function handleDeadWorker (worker) {
-	logger.warn('ThunderMole Worker ' + worker.id + ' died');
+// TODO write the log in the process "beforeExit" event once we can update to Node 0.12
+function handleDeadWorker (logger, worker) {
+	logger.warn('Worker process ' + worker.id + ' died');
 	cluster.fork();
 }
