@@ -54,6 +54,26 @@ describe('lib/thundermole', function () {
 			assert.deepEqual(defaults.routes, {});
 		});
 
+		it('should have a `logger` property', function () {
+			assert.isObject(defaults.logger);
+		});
+
+		it('should have a `logger.debug` method', function () {
+			assert.isFunction(defaults.logger.debug);
+		});
+
+		it('should have a `logger.error` method', function () {
+			assert.isFunction(defaults.logger.error);
+		});
+
+		it('should have a `logger.info` method', function () {
+			assert.isFunction(defaults.logger.info);
+		});
+
+		it('should have a `logger.warn` method', function () {
+			assert.isFunction(defaults.logger.warn);
+		});
+
 	});
 
 	describe('thundermole()', function () {
@@ -103,15 +123,50 @@ describe('lib/thundermole', function () {
 			assert.deepEqual(StatsD.firstCall.args[0], {mock: true});
 		});
 
-		it('should create a mock logger `logger` option is not present', function () {
-			delete options.logger;
-			instance = thundermole(options);
-			assert.isObject(instance.logger);
-			assert.isFunction(instance.logger.debug);
-			assert.isFunction(instance.logger.error);
-			assert.isFunction(instance.logger.info);
-			assert.isFunction(instance.logger.warn);
+		it('should throw if the `logger` option does not have a `debug` method', function () {
+			delete options.logger.debug;
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have a "debug" method');
+			options.logger.debug = '...';
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have a "debug" method');
 		});
+
+		it('should throw if the `logger` option does not have an `error` method', function () {
+			delete options.logger.error;
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have an "error" method');
+			options.logger.error = '...';
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have an "error" method');
+		});
+
+		it('should throw if the `logger` option does not have an `info` method', function () {
+			delete options.logger.info;
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have an "info" method');
+			options.logger.info = '...';
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have an "info" method');
+		});
+
+		it('should throw if the `logger` option does not have a `warn` method', function () {
+			delete options.logger.warn;
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have a "warn" method');
+			options.logger.warn = '...';
+			assert.throws(function () {
+				instance = thundermole(options);
+			}, 'Logger must have a "warn" method');
+		});
+
 
 		it('should create an HTTP proxy', function () {
 			assert.isTrue(httpProxy.createProxyServer.calledOnce);
