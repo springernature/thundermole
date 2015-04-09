@@ -98,7 +98,7 @@ describe('lib/api', function () {
 				responseHandler(null, apiResponse, apiResponseBody);
 				assert.isTrue(callback.calledOnce);
 				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
-				assert.strictEqual(callback.firstCall.args[0].message, 'API responded with a non-200 status code');
+				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) responded with a non-200 status code');
 			});
 
 			it('should call the callback with an error if the response body is not an object', function () {
@@ -106,7 +106,7 @@ describe('lib/api', function () {
 				responseHandler(null, apiResponse, apiResponseBody);
 				assert.isTrue(callback.calledOnce);
 				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
-				assert.strictEqual(callback.firstCall.args[0].message, 'API responded with a non-object');
+				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) responded with a non-object');
 			});
 
 			it('should call the callback with an error if the response body does not have a `target` property', function () {
@@ -114,7 +114,7 @@ describe('lib/api', function () {
 				responseHandler(null, apiResponse, apiResponseBody);
 				assert.isTrue(callback.calledOnce);
 				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
-				assert.strictEqual(callback.firstCall.args[0].message, 'API response does not have a target property');
+				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) response does not have a target property');
 			});
 
 		});
