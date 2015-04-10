@@ -82,6 +82,10 @@ Required. A simple routing hash. Each property maps to the first part of a reque
 
 Required. The default route to use if no others match the request.
 
+#### `appendHeader` (string)
+
+Optional. The header to send API-appended data in. Defaults to `X-Proxy-Appended-Data`.
+
 #### `rewriteHostHeader` (boolean)
 
 Optional. Whether to rewrite the `Host` header to match the proxy target. Defaults to `true`.

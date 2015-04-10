@@ -54,8 +54,12 @@ describe('lib/thundermole', function () {
 			assert.deepEqual(defaults.routes, {});
 		});
 
+		it('should have a `appendHeader` property', function () {
+			assert.deepEqual(defaults.appendHeader, 'X-Proxy-Appended-Data');
+		});
+
 		it('should have a `rewriteHostHeader` property', function () {
-		    assert.isTrue(defaults.rewriteHostHeader);
+			assert.isTrue(defaults.rewriteHostHeader);
 		});
 
 		it('should have a `logger` property', function () {
@@ -89,6 +93,7 @@ describe('lib/thundermole', function () {
 					foo: 'http://foo.api/',
 					default: 'http://default.api/'
 				},
+				appendHeader: 'X-Proxy-Appended-Data',
 				rewriteHostHeader: true,
 				statsd: {
 					host: 'localhost'
