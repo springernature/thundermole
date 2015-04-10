@@ -37,6 +37,7 @@ function startBackendDefault (testAppsConfig, done) {
 
 	};
 	var backend = http.createServer(function (request, response) {
+		backend.lastRequest = request;
 		(routes[request.url] || routes.default)(request, response);
 	});
 	backend.listen(testAppsConfig.ports.backendDefault, function (error) {

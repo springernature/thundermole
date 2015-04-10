@@ -32,6 +32,7 @@ function startApiDefault (testAppsConfig, done) {
 
 	};
 	var api = http.createServer(function (request, response) {
+		api.lastRequest = request;
 		(routes[request.url] || routes.default)(request, response);
 	});
 	api.listen(testAppsConfig.ports.apiDefault, function (error) {
