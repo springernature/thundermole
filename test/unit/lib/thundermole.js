@@ -128,6 +128,11 @@ describe('lib/thundermole', function () {
 			assert.deepEqual(StatsD.firstCall.args[0], {mock: true});
 		});
 
+		it('should add a handler for the StatsD client socket "error" event', function () {
+			assert.isTrue(instance.statsd.socket.on.withArgs('error').calledOnce);
+			assert.isFunction(instance.statsd.socket.on.withArgs('error').firstCall.args[1]);
+		});
+
 		it('should throw if the `logger` option does not have a `debug` method', function () {
 			delete options.logger.debug;
 			assert.throws(function () {
