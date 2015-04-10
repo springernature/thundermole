@@ -228,6 +228,39 @@ describe('lib/thundermole', function () {
 
 		});
 
+		it('should add a handler for the HTTP proxy "proxyRes" event', function () {
+			assert.isTrue(instance.proxy.on.withArgs('proxyRes').calledOnce);
+			assert.isFunction(instance.proxy.on.withArgs('proxyRes').firstCall.args[1]);
+		});
+
+		describe('HTTP proxy "proxyRes" handler', function () {
+			var proxyOptions, proxyResHandler, proxyResponse, request, response;
+
+			beforeEach(function () {
+				proxyOptions = {
+					append: {
+						foo: 'bar'
+					}
+				};
+				proxyResHandler = instance.proxy.on.withArgs('proxyRes').firstCall.args[1];
+				proxyResponse = new http.ServerResponse();
+				request = new http.IncomingMessage();
+				response = new http.ServerResponse();
+				response.timer = createTimer();
+				response.timer.end.returns(100);
+				proxyResHandler(proxyResponse, request, response, proxyOptions);
+			});
+
+			it('should increment the `proxy_response` statistic', function () {
+				assert.isTrue(instance.statsd.increment.withArgs('proxy_response').calledOnce);
+			});
+
+			it('should set the `proxy_response_time` statistic with the response timer', function () {
+				assert.isTrue(instance.statsd.timing.withArgs('proxy_response_time', 100).calledOnce);
+			});
+
+		});
+
 		it('should add a handler for the HTTP proxy "error" event', function () {
 			assert.isTrue(instance.proxy.on.withArgs('error').calledOnce);
 			assert.isFunction(instance.proxy.on.withArgs('error').firstCall.args[1]);
