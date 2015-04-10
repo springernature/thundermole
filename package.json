@@ -31,10 +31,12 @@
 		"winston-syslog": "~1.1"
 	},
 	"devDependencies": {
+		"async": "~0.9",
 		"jshint": "~2.6",
 		"mocha": "~2.2",
 		"mockery": "~1.4",
 		"proclaim": "~3.2",
+		"request": "~2.55",
 		"sinon": "~1.14"
 	},
 
