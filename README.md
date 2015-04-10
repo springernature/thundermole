@@ -82,6 +82,10 @@ Required. A simple routing hash. Each property maps to the first part of a reque
 
 Required. The default route to use if no others match the request.
 
+#### `rewriteHostHeader` (boolean)
+
+Optional. Whether to rewrite the `Host` header to match the proxy target. Defaults to `true`.
+
 #### `statsd` (object)
 
 Optional. A [node-statsd][node-statsd] configuration object, as outlined in their documentation.

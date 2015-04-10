@@ -54,6 +54,10 @@ describe('lib/thundermole', function () {
 			assert.deepEqual(defaults.routes, {});
 		});
 
+		it('should have a `rewriteHostHeader` property', function () {
+		    assert.isTrue(defaults.rewriteHostHeader);
+		});
+
 		it('should have a `logger` property', function () {
 			assert.isObject(defaults.logger);
 		});
@@ -85,6 +89,7 @@ describe('lib/thundermole', function () {
 					foo: 'http://foo.api/',
 					default: 'http://default.api/'
 				},
+				rewriteHostHeader: true,
 				statsd: {
 					host: 'localhost'
 				},
@@ -182,6 +187,7 @@ describe('lib/thundermole', function () {
 
 			beforeEach(function () {
 				proxyOptions = {
+					target: 'http://foo:1234/',
 					append: {
 						foo: 'bar'
 					}
@@ -191,6 +197,19 @@ describe('lib/thundermole', function () {
 				request = new http.IncomingMessage();
 				response = new http.ServerResponse();
 				proxyReqHandler(proxyRequest, request, response, proxyOptions);
+			});
+
+			it('should set the `Host` header to the target host', function () {
+				assert.isTrue(proxyRequest.setHeader.withArgs('Host', 'foo:1234').calledOnce);
+			});
+
+			it('should not set the `Host` header to the target host if `options.rewriteHostHeader` is `false`', function () {
+				options.rewriteHostHeader = false;
+				proxyRequest.setHeader.reset();
+				instance = thundermole(options);
+				proxyReqHandler = instance.proxy.on.withArgs('proxyReq').firstCall.args[1];
+				proxyReqHandler(proxyRequest, request, response, proxyOptions);
+				assert.isFalse(proxyRequest.setHeader.withArgs('Host').called);
 			});
 
 			it('should remove the `X-Proxy-Appended-Data` header from the proxy request', function () {
