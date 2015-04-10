@@ -10,13 +10,13 @@ var startBackendTest = require('./mock/backend-test');
 var startMole = require('./mock/mole');
 
 before(function (done) {
-	var testAppsConfig = buildTestApplicationsConfig();
-	var testApps;
-	startTestApplications(testAppsConfig, function (error, result) {
+	var self = this;
+	self.testAppsConfig = buildTestApplicationsConfig();
+	startTestApplications(self.testAppsConfig, function (error, result) {
 		if (error) {
 			return done(error);
 		}
-		testApps = result;
+		self.testApps = result;
 		done();
 	});
 });
