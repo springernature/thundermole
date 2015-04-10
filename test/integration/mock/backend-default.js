@@ -1,6 +1,7 @@
 'use strict';
 
 var http = require('http');
+var parseUrl = require('url').parse;
 
 module.exports = startBackendDefault;
 
@@ -37,8 +38,9 @@ function startBackendDefault (testAppsConfig, done) {
 
 	};
 	var backend = http.createServer(function (request, response) {
+		var url = parseUrl(request.url).pathname;
 		backend.lastRequest = request;
-		(routes[request.url] || routes.default)(request, response);
+		(routes[url] || routes.default)(request, response);
 	});
 	backend.listen(testAppsConfig.ports.backendDefault, function (error) {
 		done(error, backend);

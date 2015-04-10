@@ -1,6 +1,7 @@
 'use strict';
 
 var http = require('http');
+var parseUrl = require('url').parse;
 
 module.exports = startApiDefault;
 
@@ -32,8 +33,9 @@ function startApiDefault (testAppsConfig, done) {
 
 	};
 	var api = http.createServer(function (request, response) {
+		var url = parseUrl(request.url).pathname;
 		api.lastRequest = request;
-		(routes[request.url] || routes.default)(request, response);
+		(routes[url] || routes.default)(request, response);
 	});
 	api.listen(testAppsConfig.ports.apiDefault, function (error) {
 		done(error, api);
