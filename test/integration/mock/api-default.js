@@ -12,7 +12,9 @@ function startApiDefault (testAppsConfig, done) {
 			response.writeHead(200);
 			response.end(JSON.stringify({
 				target: testAppsConfig.addresses.backendDefault,
-				append: {}
+				append: {
+					fromDefaultApi: true
+				}
 			}));
 		},
 
