@@ -24,6 +24,18 @@ describe('ThunderMole ➞ Default API ➞ Default Backend', function () {
 
 	});
 
+	describeRequest('POST', '/', null, function () {
+
+		it('should respond with a 200 status', function () {
+			assert.strictEqual(this.lastResponse.statusCode, 200);
+		});
+
+		it('should respond with the expected body', function () {
+			assert.strictEqual(this.lastResponseBody, 'Hello From Backend Default!');
+		});
+
+	});
+
 	describeRequest('GET', '/foo?bar=baz', null, function () {
 
 		it('should send the full path to the API', function () {
@@ -112,6 +124,18 @@ describe('ThunderMole ➞ Test API ➞ Test Backend', function () {
 		it('should send the API append data to the backend', function () {
 			var backendRequest = this.testApps.backendTest.lastRequest;
 			assert.strictEqual(backendRequest.headers['x-proxy-appended-data'], '{"fromTestApi":true}');
+		});
+
+	});
+
+	describeRequest('POST', '/test', null, function () {
+
+		it('should respond with a 200 status', function () {
+			assert.strictEqual(this.lastResponse.statusCode, 200);
+		});
+
+		it('should respond with the expected body', function () {
+			assert.strictEqual(this.lastResponseBody, 'Hello From Backend Test!');
 		});
 
 	});
