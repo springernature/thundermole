@@ -13,11 +13,6 @@ function startBackendDefault (testAppsConfig, done) {
 			response.end('Hello From Backend Default!');
 		},
 
-		'/dump-append-data': function (request, response) {
-			response.writeHead(200);
-			response.end(request.headers['x-proxy-appended-data']);
-		},
-
 		'/headers': function (request, response) {
 			response.writeHead(200, {
 				'X-Foo': 'bar',

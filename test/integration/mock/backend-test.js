@@ -8,7 +8,7 @@ module.exports = startBackendTest;
 function startBackendTest (testAppsConfig, done) {
 	var routes = {
 
-		'/': function (request, response) {
+		'/test': function (request, response) {
 			response.writeHead(200);
 			response.end('Hello From Backend Test!');
 		},
