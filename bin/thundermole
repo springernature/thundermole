@@ -20,6 +20,7 @@ function configureProgram (program) {
 		.option('-C, --cluster', 'create a cluster of workers for handling requests')
 		.option('-p, --port <port>', 'the port to run on')
 		.option('-w, --workers <num>', 'the number of workers to add to the cluster')
+		.option('-r, --rewrite-host-header', 'whether to rewrite the host header')
 		.parse(process.argv);
 	defaultProgramProperties(program);
 }
@@ -40,6 +41,7 @@ function defaultProgramProperties (program) {
 	program.port = parseInt(program.port || process.env.PORT || 3000, 10);
 	program.workers = parseInt(program.workers || cpuCount, 10);
 	program.workers = Math.min(program.workers, cpuCount);
+	program['rewrite-host-header'] = !!program['rewrite-host-header'];
 }
 
 function createLogger (syslogConfig) {
@@ -65,7 +67,8 @@ function runThunderMoleWorker (program, logger) {
 	var mole = thundermole({
 		logger: logger,
 		routes: tryRequire(path.join(program.config, 'routes.json')),
-		statsd: tryRequire(path.join(program.config, 'statsd.json'))
+		statsd: tryRequire(path.join(program.config, 'statsd.json')),
+		rewriteHostHeader: program['rewrite-host-header']
 	});
 	mole.listen(program.port, function (error) {
 		var workerName = 'Worker process' + (cluster.isWorker ? ' ' + cluster.worker.id : '');
