@@ -21,6 +21,7 @@ function configureProgram (program) {
 		.option('-p, --port <port>', 'the port to run on')
 		.option('-w, --workers <num>', 'the number of workers to add to the cluster')
 		.option('-r, --rewrite-host-header', 'whether to rewrite the host header')
+		.option('-P, --ping-url <url>', 'A ping URL for the application')
 		.parse(process.argv);
 	defaultProgramProperties(program);
 }
@@ -42,6 +43,7 @@ function defaultProgramProperties (program) {
 	program.workers = parseInt(program.workers || cpuCount, 10);
 	program.workers = Math.min(program.workers, cpuCount);
 	program.rewriteHostHeader = program.rewriteHostHeader || false;
+	program.pingUrl = program.pingUrl || null;
 }
 
 function createLogger (syslogConfig) {
@@ -68,7 +70,8 @@ function runThunderMoleWorker (program, logger) {
 		logger: logger,
 		routes: tryRequire(path.join(program.config, 'routes.json')),
 		statsd: tryRequire(path.join(program.config, 'statsd.json')),
-		rewriteHostHeader: program.rewriteHostHeader
+		rewriteHostHeader: program.rewriteHostHeader,
+		pingUrl: program.pingUrl
 	});
 	mole.listen(program.port, function (error) {
 		var workerName = 'Worker process' + (cluster.isWorker ? ' ' + cluster.worker.id : '');
