@@ -4,7 +4,7 @@ ThunderMole
 
 Proxy requests to different applications based on an API response.
 
-![ThunderMole FLow Diagram](docs/Diagram.png?raw=true)
+![ThunderMole Flow Diagram](docs/Diagram.png?raw=true)
 
 
 Installing
@@ -102,7 +102,7 @@ Optional. An object with the methods `debug`, `error`, `info`, and `warn` which 
 
 #### `pingUrl` (string)
 
-Optional. A URL path (including preceeding slash) which, when requested, will respond with a `200` status. This can be used for monitoring your ThunderMole instance. Defaults to `null`.
+Optional. A URL path (including preceding slash) which, when requested, will respond with a `200` status. This can be used for monitoring your ThunderMole instance. Defaults to `null`.
 
 
 
