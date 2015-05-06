@@ -41,7 +41,7 @@ function defaultProgramProperties (program) {
 	program.port = parseInt(program.port || process.env.PORT || 3000, 10);
 	program.workers = parseInt(program.workers || cpuCount, 10);
 	program.workers = Math.min(program.workers, cpuCount);
-	program['rewrite-host-header'] = !!program['rewrite-host-header'];
+	program.rewriteHostHeader = program.rewriteHostHeader || false;
 }
 
 function createLogger (syslogConfig) {
@@ -68,7 +68,7 @@ function runThunderMoleWorker (program, logger) {
 		logger: logger,
 		routes: tryRequire(path.join(program.config, 'routes.json')),
 		statsd: tryRequire(path.join(program.config, 'statsd.json')),
-		rewriteHostHeader: program['rewrite-host-header']
+		rewriteHostHeader: program.rewriteHostHeader
 	});
 	mole.listen(program.port, function (error) {
 		var workerName = 'Worker process' + (cluster.isWorker ? ' ' + cluster.worker.id : '');
