@@ -100,6 +100,10 @@ Optional. A [node-statsd][node-statsd] configuration object, as outlined in thei
 
 Optional. An object with the methods `debug`, `error`, `info`, and `warn` which will be used to report errors and request information.
 
+#### `pingUrl` (string)
+
+Optional. A URL path (including preceeding slash) which, when requested, will respond with a `200` status. This can be used for monitoring your ThunderMole instance. Defaults to `null`.
+
 
 
 Running Example Applications
