@@ -82,6 +82,10 @@ describe('lib/thundermole', function () {
 			assert.isFunction(defaults.logger.warn);
 		});
 
+		it('should have a `pingUrl` property', function () {
+		    assert.isNull(defaults.pingUrl);
+		});
+
 	});
 
 	describe('thundermole()', function () {
@@ -98,7 +102,8 @@ describe('lib/thundermole', function () {
 				statsd: {
 					host: 'localhost'
 				},
-				logger: logger
+				logger: logger,
+				pingUrl: '/ping'
 			};
 			instance = thundermole(options);
 		});
@@ -307,12 +312,13 @@ describe('lib/thundermole', function () {
 			assert.isFunction(http.createServer.firstCall.args[0]);
 		});
 
-		describe('HTTP server "request" handler', function () {
+		describe('HTTP server "request" handler (no ping)', function () {
 			var request, response, serverRequestHandler;
 
 			beforeEach(function () {
 				request = new http.IncomingMessage();
 				response = new http.ServerResponse();
+				request.url = '/';
 				serverRequestHandler = http.createServer.firstCall.args[0];
 				serverRequestHandler(request, response);
 			});
@@ -406,6 +412,31 @@ describe('lib/thundermole', function () {
 
 				});
 
+			});
+
+		});
+
+		describe('HTTP server "request" handler (with ping)', function () {
+			var request, response, serverRequestHandler;
+
+			beforeEach(function () {
+				request = new http.IncomingMessage();
+				response = new http.ServerResponse();
+				request.url = '/ping?foo=bar';
+				serverRequestHandler = http.createServer.firstCall.args[0];
+				serverRequestHandler(request, response);
+			});
+
+			it('should respond with a `200` status code', function () {
+				assert.isTrue(response.writeHead.withArgs(200).calledOnce);
+			});
+
+			it('should end the response', function () {
+				assert.isTrue(response.end.withArgs('pong').calledOnce);
+			});
+
+			it('should not call the API', function () {
+				assert.isFalse(api.get.called);
 			});
 
 		});
