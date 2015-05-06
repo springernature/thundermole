@@ -12,7 +12,8 @@ function startMole (testAppsConfig, done) {
 			error: testAppsConfig.addresses.apiDefault + '/api/error',
 			notfound: testAppsConfig.addresses.apiDefault + '/api/notfound',
 			default: testAppsConfig.addresses.apiDefault + '/api/routing'
-		}
+		},
+		pingUrl: '/ping'
 	});
 	mole.listen(testAppsConfig.ports.mole, function (error) {
 		done(error, mole);
