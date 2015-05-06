@@ -4,7 +4,7 @@ ThunderMole
 
 Proxy requests to different applications based on an API response.
 
-![ThunderMole FLow Diagram](docs/Diagram.png?raw=true)
+![ThunderMole Flow Diagram](docs/Diagram.png?raw=true)
 
 
 Installing
@@ -26,12 +26,14 @@ Usage: bin/thundermole [options]
 
 Options:
 
-  -h, --help           output usage information
-  -V, --version        output the version number
-  -c, --config <path>  the directory to look for config files in
-  -C, --cluster        create a cluster of workers for handling requests
-  -p, --port <port>    the port to run on
-  -w, --workers <num>  the number of workers to add to the cluster
+  -h, --help                 output usage information
+  -V, --version              output the version number
+  -c, --config <path>        the directory to look for config files in
+  -C, --cluster              create a cluster of workers for handling requests
+  -p, --port <port>          the port to run on
+  -w, --workers <num>        the number of workers to add to the cluster
+  -r, --rewrite-host-header  whether to rewrite the host header
+  -P, --ping-url             A ping URL for the application
 ```
 
 ### Configuration
@@ -97,6 +99,10 @@ Optional. A [node-statsd][node-statsd] configuration object, as outlined in thei
 #### `logger` (object)
 
 Optional. An object with the methods `debug`, `error`, `info`, and `warn` which will be used to report errors and request information.
+
+#### `pingUrl` (string)
+
+Optional. A URL path (including preceding slash) which, when requested, will respond with a `200` status. This can be used for monitoring your ThunderMole instance. Defaults to `null`.
 
 
 
