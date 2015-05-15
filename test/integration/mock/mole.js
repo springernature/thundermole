@@ -11,6 +11,7 @@ function startMole (testAppsConfig, done) {
 			incorrect: testAppsConfig.addresses.apiDefault + '/api/incorrect',
 			error: testAppsConfig.addresses.apiDefault + '/api/error',
 			notfound: testAppsConfig.addresses.apiDefault + '/api/notfound',
+			redirect: testAppsConfig.addresses.apiDefault + '/api/redirect',
 			default: testAppsConfig.addresses.apiDefault + '/api/routing'
 		},
 		pingUrl: '/ping'

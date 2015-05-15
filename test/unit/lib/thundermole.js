@@ -377,8 +377,42 @@ describe('lib/thundermole', function () {
 						});
 					});
 
-					it('should pass the proxy any additional API response properties', function () {
+					it('should not pass the proxy any additional API response properties', function () {
 						assert.isUndefined(instance.proxy.web.withArgs(request, response).firstCall.args[2].nonStandardProperty);
+					});
+
+				});
+
+				describe('when API call is successful (and responds with a redirect)', function () {
+
+					beforeEach(function () {
+						apiResponse = {
+							redirect: 'foo-redirect',
+							redirect_type: 303
+						};
+						apiResponseHandler(null, apiResponse);
+					});
+
+					it('should not proxy the request', function () {
+						assert.isFalse(instance.proxy.web.calledOnce);
+					});
+
+					it('should redirect the original request', function () {
+						assert.isTrue(response.writeHead.withArgs(303).calledOnce);
+						assert.isObject(response.writeHead.firstCall.args[1]);
+						assert.strictEqual(response.writeHead.firstCall.args[1].Location, 'foo-redirect');
+						assert.isTrue(response.end.calledOnce);
+					});
+
+					it('should default the redirect status code', function () {
+						delete apiResponse.redirect_type;
+						response.writeHead.reset();
+						response.end.reset();
+						apiResponseHandler(null, apiResponse);
+						assert.isTrue(response.writeHead.withArgs(301).calledOnce);
+						assert.isObject(response.writeHead.firstCall.args[1]);
+						assert.strictEqual(response.writeHead.firstCall.args[1].Location, 'foo-redirect');
+						assert.isTrue(response.end.calledOnce);
 					});
 
 				});
