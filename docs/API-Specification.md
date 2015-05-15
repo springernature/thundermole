@@ -28,7 +28,7 @@ In this request:
 Responses
 ---------
 
-The API should respond with the following information. Any extra headers or body properties will be ignored:
+If the original request should be proxied, the API should respond with the following information:
 
 ```
 HTTP/1.1 200 OK
@@ -42,8 +42,26 @@ Content-Type: application/json; charset=utf-8
 }
 ```
 
-In this response:
+If the original request should be redirected, the API should respond with the following:
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+    "redirect": "{redirect_url}",
+    "redirect_type": {redirect_type}
+}
+```
+
+In these responses:
 
 `{target_url}` is the target application that ThunderMole should proxy the original request to. This should only comprise of the scheme, host, and port parts of the URL with no path. E.g. `"http://example.com:1234"`
 
-The `append` property should be an object that will be passed onto the target application in the `X-Proxy-Appended-Data` header, serialized as JSON.
+`{redirect_url}` is the target URL that ThunderMole should redirect the original request to. This should be the full URL you wish to redirect to.
+
+`{redirect_type}` is the redirect status code to use when ThunderMole redirects. It is optional, and will default to `301`. This should be a number, not a string, and only `301`, `302`, and `303` values are accepted.
+
+The `append` property should be an object that will be passed onto the target application in the `X-Proxy-Appended-Data` header, serialized as JSON. Append data is only used when proxying, not redirecting.
+
+Any extra headers or body properties will be ignored.

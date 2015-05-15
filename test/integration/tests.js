@@ -208,6 +208,23 @@ describe('ThunderMole ➞ Not Found API', function () {
 
 });
 
+describe('ThunderMole ➞ Redirect API', function () {
+
+	describeRequest('GET', '/redirect', null, function () {
+
+		it('should respond with a 200 status', function () {
+			assert.strictEqual(this.lastResponse.statusCode, 200);
+		});
+
+		it('should respond with the expected body', function () {
+			assert.strictEqual(this.lastResponseBody, 'You got redirected!');
+		});
+
+	});
+
+});
+
+
 describe('ThunderMole ➞ Ping URL', function () {
 
 	describeRequest('GET', '/ping', null, function () {

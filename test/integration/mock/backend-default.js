@@ -21,6 +21,11 @@ function startBackendDefault (testAppsConfig, done) {
 			response.end('Hello From Backend Default!');
 		},
 
+		'/redirected': function (request, response) {
+			response.writeHead(200);
+			response.end('You got redirected!');
+		},
+
 		'/400': function (request, response) {
 			response.writeHead(400);
 			response.end('Bad Request');

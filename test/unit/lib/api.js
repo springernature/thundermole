@@ -109,12 +109,21 @@ describe('lib/api', function () {
 				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) responded with a non-object');
 			});
 
-			it('should call the callback with an error if the response body does not have a `target` property', function () {
-				delete apiResponseBody.target;
+			it('should call the callback with an error if the response body does not have a `target` or `redirect` property', function () {
+				apiResponseBody.target = null;
+				apiResponseBody.redirect = null;
 				responseHandler(null, apiResponse, apiResponseBody);
 				assert.isTrue(callback.calledOnce);
 				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
-				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) response does not have a target property');
+				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) response does not have a target or redirect property');
+			});
+
+			it('should call the callback with an error if the response body `redirect_type` property is invalid', function () {
+				apiResponseBody.redirect_type = 300;
+				responseHandler(null, apiResponse, apiResponseBody);
+				assert.isTrue(callback.calledOnce);
+				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
+				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) response redirect_type property is invalid. Should be 301, 302, or 303');
 			});
 
 		});

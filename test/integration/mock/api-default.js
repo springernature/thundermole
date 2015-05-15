@@ -18,6 +18,13 @@ function startApiDefault (testAppsConfig, done) {
 			}));
 		},
 
+		'/api/redirect': function (request, response) {
+			response.writeHead(200);
+			response.end(JSON.stringify({
+				redirect: testAppsConfig.addresses.mole + '/redirected'
+			}));
+		},
+
 		'/api/incorrect': function (request, response) {
 			response.writeHead(200);
 			response.end(JSON.stringify({}));
