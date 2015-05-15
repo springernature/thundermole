@@ -2,7 +2,7 @@
 ThunderMole
 ===========
 
-Proxy requests to different applications based on an API response.
+Proxy or redirect requests to different applications based on an API response.
 
 ![ThunderMole Flow Diagram](docs/Diagram.png?raw=true)
 

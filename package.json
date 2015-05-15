@@ -3,7 +3,7 @@
 	"version": "0.2.0",
 	"private": true,
 
-	"description": "Proxy requests to different applications based on an API response",
+	"description": "Proxy or redirect requests to different applications based on an API response",
 	"keywords": [ "api", "router", "proxy" ],
 	"author": "Nature Publishing Group",
 	"contributors": [
