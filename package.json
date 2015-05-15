@@ -1,6 +1,6 @@
 {
 	"name": "thundermole",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"private": true,
 
 	"description": "Proxy or redirect requests to different applications based on an API response",

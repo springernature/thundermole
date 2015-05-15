@@ -1,6 +1,10 @@
 
 # History
 
+## 0.3.1 pre-release (2015-05-15)
+
+  * Log redirects properly
+
 ## 0.3.0 pre-release (2015-05-15)
 
   * Build in redirecting
