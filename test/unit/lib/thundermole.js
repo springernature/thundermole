@@ -298,6 +298,8 @@ describe('lib/thundermole', function () {
 
 			it('should respond with a `500` status code', function () {
 				assert.isTrue(response.writeHead.withArgs(500).calledOnce);
+				assert.isObject(response.writeHead.withArgs(500).firstCall.args[1]);
+				assert.strictEqual(response.writeHead.withArgs(500).firstCall.args[1]['Content-Type'], 'text/html');
 			});
 
 			it('should end the response', function () {
@@ -433,6 +435,8 @@ describe('lib/thundermole', function () {
 
 					it('should respond with a `500` status code', function () {
 						assert.isTrue(response.writeHead.withArgs(500).calledOnce);
+						assert.isObject(response.writeHead.withArgs(500).firstCall.args[1]);
+						assert.strictEqual(response.writeHead.withArgs(500).firstCall.args[1]['Content-Type'], 'text/html');
 					});
 
 					it('should end the response', function () {
