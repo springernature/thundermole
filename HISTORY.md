@@ -1,6 +1,10 @@
 
 # History
 
+## 0.3.2 pre-release (2015-05-18)
+
+  * Send a correct content-type for error pages
+
 ## 0.3.1 pre-release (2015-05-15)
 
   * Log redirects properly
