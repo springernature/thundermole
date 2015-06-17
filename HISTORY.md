@@ -1,6 +1,11 @@
 
 # History
 
+## 0.3.3 pre-release (2015-06-17)
+
+  * Decide on a consistent naming case
+  * Update dependencies
+
 ## 0.3.2 pre-release (2015-05-18)
 
   * Send a correct content-type for error pages
