@@ -29,9 +29,9 @@ function configureProgram (program) {
 function runProgram (program) {
 	var logger = createLogger(tryRequire(path.join(program.config, 'syslog.json')));
 	if (program.cluster && cluster.isMaster) {
-		runThunderMoleMaster(program, logger);
+		runThundermoleMaster(program, logger);
 	} else {
-		runThunderMoleWorker(program, logger);
+		runThundermoleWorker(program, logger);
 	}
 }
 
@@ -57,7 +57,7 @@ function createLogger (syslogConfig) {
 	return logger;
 }
 
-function runThunderMoleMaster (program, logger) {
+function runThundermoleMaster (program, logger) {
 	logger.info('Master process running, port: %d, pid: %d', program.port, process.pid);
 	for (var i = 0; i < program.workers; i += 1) {
 		cluster.fork();
@@ -65,7 +65,7 @@ function runThunderMoleMaster (program, logger) {
 	cluster.on('exit', handleDeadWorker.bind(null, logger));
 }
 
-function runThunderMoleWorker (program, logger) {
+function runThundermoleWorker (program, logger) {
 	var mole = thundermole({
 		logger: logger,
 		routes: tryRequire(path.join(program.config, 'routes.json')),

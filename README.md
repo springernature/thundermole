@@ -1,10 +1,10 @@
 
-ThunderMole
+Thundermole
 ===========
 
 Proxy or redirect requests to different applications based on an API response.
 
-![ThunderMole Flow Diagram](docs/Diagram.png?raw=true)
+![Thundermole Flow Diagram](docs/Diagram.png?raw=true)
 
 
 Installing
@@ -18,7 +18,7 @@ Installing
 - Run `make` to install dependencies and run the test suite
 
 
-Running ThunderMole
+Running Thundermole
 -------------------
 
 ```
@@ -102,14 +102,14 @@ Optional. An object with the methods `debug`, `error`, `info`, and `warn` which 
 
 #### `pingUrl` (string)
 
-Optional. A URL path (including preceding slash) which, when requested, will respond with a `200` status. This can be used for monitoring your ThunderMole instance. Defaults to `null`.
+Optional. A URL path (including preceding slash) which, when requested, will respond with a `200` status. This can be used for monitoring your Thundermole instance. Defaults to `null`.
 
 
 
 Running Example Applications
 ----------------------------
 
-ThunderMole comes with an example application which runs two APIs and two backends. To run these you'll need to install [Foreman][foreman], or look into the example [Procfile](example/Procfile) and spin up each process separately.
+Thundermole comes with an example application which runs two APIs and two backends. To run these you'll need to install [Foreman][foreman], or look into the example [Procfile](example/Procfile) and spin up each process separately.
 
 If you have Foreman, run the example application with:
 
@@ -118,10 +118,10 @@ foreman start -d example
 ```
 
 
-Building ThunderMole-Compatible APIs
+Building Thundermole-Compatible APIs
 ------------------------------------
 
-In order for ThunderMole to be able to communicate with your API, you'll need to follow the [API Specification](/docs/API-Specification.md).
+In order for Thundermole to be able to communicate with your API, you'll need to follow the [API Specification](/docs/API-Specification.md).
 
 
 Testing

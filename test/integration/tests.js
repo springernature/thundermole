@@ -5,7 +5,7 @@
 var assert = require('proclaim');
 var describeRequest = require('./helper/describe-request');
 
-describe('ThunderMole ➞ Default API ➞ Default Backend', function () {
+describe('Thundermole ➞ Default API ➞ Default Backend', function () {
 
 	describeRequest('GET', '/', null, function () {
 
@@ -109,7 +109,7 @@ describe('ThunderMole ➞ Default API ➞ Default Backend', function () {
 
 });
 
-describe('ThunderMole ➞ Test API ➞ Test Backend', function () {
+describe('Thundermole ➞ Test API ➞ Test Backend', function () {
 
 	describeRequest('GET', '/test', null, function () {
 
@@ -172,7 +172,7 @@ describe('ThunderMole ➞ Test API ➞ Test Backend', function () {
 
 });
 
-describe('ThunderMole ➞ Incorrect API', function () {
+describe('Thundermole ➞ Incorrect API', function () {
 
 	describeRequest('GET', '/incorrect', null, function () {
 
@@ -184,7 +184,7 @@ describe('ThunderMole ➞ Incorrect API', function () {
 
 });
 
-describe('ThunderMole ➞ Erroring API', function () {
+describe('Thundermole ➞ Erroring API', function () {
 
 	describeRequest('GET', '/error', null, function () {
 
@@ -196,7 +196,7 @@ describe('ThunderMole ➞ Erroring API', function () {
 
 });
 
-describe('ThunderMole ➞ Not Found API', function () {
+describe('Thundermole ➞ Not Found API', function () {
 
 	describeRequest('GET', '/notfound', null, function () {
 
@@ -208,7 +208,7 @@ describe('ThunderMole ➞ Not Found API', function () {
 
 });
 
-describe('ThunderMole ➞ Redirect API', function () {
+describe('Thundermole ➞ Redirect API', function () {
 
 	describeRequest('GET', '/redirect', null, function () {
 
@@ -225,7 +225,7 @@ describe('ThunderMole ➞ Redirect API', function () {
 });
 
 
-describe('ThunderMole ➞ Ping URL', function () {
+describe('Thundermole ➞ Ping URL', function () {
 
 	describeRequest('GET', '/ping', null, function () {
 
