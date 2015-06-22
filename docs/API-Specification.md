@@ -60,7 +60,7 @@ In these responses:
 
 `{redirect_url}` is the target URL that Thundermole should redirect the original request to. This should be the full URL you wish to redirect to.
 
-`{redirect_type}` is the redirect status code to use when Thundermole redirects. It is optional, and will default to `301`. This should be a number, not a string, and only `301`, `302`, and `303` values are accepted.
+`{redirect_type}` is the redirect status code to use when Thundermole redirects. It is optional, and will default to `301`. This should be a number, not a string, and only `301`, `302`, `303`, and `307` values are accepted.
 
 The `append` property should be an object that will be passed onto the target application in the `X-Proxy-Appended-Data` header, serialized as JSON. Append data is only used when proxying, not redirecting.
 
