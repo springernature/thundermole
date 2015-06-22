@@ -123,7 +123,7 @@ describe('lib/api', function () {
 				responseHandler(null, apiResponse, apiResponseBody);
 				assert.isTrue(callback.calledOnce);
 				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
-				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) response redirect_type property is invalid. Should be 301, 302, or 303');
+				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) response redirect_type property is invalid. Should be 301, 302, 303, or 307');
 			});
 
 		});
