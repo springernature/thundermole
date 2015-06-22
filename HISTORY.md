@@ -1,6 +1,10 @@
 
 # History
 
+## 0.4.0 pre-release (2015-06-22)
+
+  * Add support for 307 redirects
+
 ## 0.3.3 pre-release (2015-06-17)
 
   * Decide on a consistent naming case
