@@ -1,0 +1,23 @@
+
+# Run tests in Node.js 0.10 and 0.12
+language: node_js
+node_js:
+  - "0.10"
+  - "0.12"
+
+# Build only master (and pull-requests)
+branches:
+  only:
+    - master
+
+# Build script
+script: make ci
+
+# Send notifications to the FEDs slack channel
+notifications:
+  slack: thefeds:vG3hLYB07EwTYpQFp3TNUx82
+
+# Cache node modules between runs
+cache:
+  directories:
+    - node_modules
