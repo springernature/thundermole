@@ -202,6 +202,11 @@ describe('lib/api', function () {
 			routes = {
 				foo: 'foo-route',
 				bar: 'bar-route',
+				'/^reg1/': 'reg1-route',
+				'/reg2/': 'reg2-route',
+				'/^reg3\\//': 'reg3-route',
+				'/^reg4$/': 'reg4-route',
+				'/^REG5(\\/|$)/i': 'reg5-route',
 				default: 'default-route'
 			};
 		});
@@ -211,12 +216,27 @@ describe('lib/api', function () {
 			assert.strictEqual(api.buildApiRequestUrl('http://example.com/bar', routes), 'bar-route');
 			assert.strictEqual(api.buildApiRequestUrl('http://example.com/foo/baz', routes), 'foo-route');
 			assert.strictEqual(api.buildApiRequestUrl('http://example.com/foo/bar/baz', routes), 'foo-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg1', routes), 'reg1-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg1/foo', routes), 'reg1-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg1x', routes), 'reg1-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg1/reg2', routes), 'reg1-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/xxreg2xx', routes), 'reg2-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg3/foo', routes), 'reg3-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg4', routes), 'reg4-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg5', routes), 'reg5-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/REG5/', routes), 'reg5-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/REG5/foo', routes), 'reg5-route');
 		});
 
 		it('should return a default URL when no route is matched', function () {
 			assert.strictEqual(api.buildApiRequestUrl('http://example.com/', routes), 'default-route');
-			assert.strictEqual(api.buildApiRequestUrl('http://example.com/baz', routes), 'default-route');
-			assert.strictEqual(api.buildApiRequestUrl('http://example.com/baz/foo', routes), 'default-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/noroute', routes), 'default-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/noroute/foo', routes), 'default-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/noroute/baz', routes), 'default-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/REG1', routes), 'default-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg3x', routes), 'default-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg4/', routes), 'default-route');
+			assert.strictEqual(api.buildApiRequestUrl('http://example.com/reg4/foo', routes), 'default-route');
 		});
 
 	});

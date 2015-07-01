@@ -109,6 +109,62 @@ describe('Thundermole ➞ Default API ➞ Default Backend', function () {
 
 });
 
+describe('Thundermole ➞ Default API (via RegExp route) ➞ Default Backend', function () {
+
+	describeRequest('GET', '/regexp', null, function () {
+
+		it('should respond with a 200 status', function () {
+			assert.strictEqual(this.lastResponse.statusCode, 200);
+		});
+
+		it('should respond with the expected body', function () {
+			assert.strictEqual(this.lastResponseBody, 'RegExp 1');
+		});
+
+		it('should send the API append data to the backend', function () {
+			var backendRequest = this.testApps.backendDefault.lastRequest;
+			assert.strictEqual(backendRequest.headers['x-proxy-appended-data'], '{"fromDefaultApi":true,"regexpRoute":true}');
+		});
+
+	});
+
+	describeRequest('GET', '/xxregexpxx', null, function () {
+
+		it('should respond with a 200 status', function () {
+			assert.strictEqual(this.lastResponse.statusCode, 200);
+		});
+
+		it('should respond with the expected body', function () {
+			assert.strictEqual(this.lastResponseBody, 'RegExp 2');
+		});
+
+		it('should send the API append data to the backend', function () {
+			var backendRequest = this.testApps.backendDefault.lastRequest;
+			assert.strictEqual(backendRequest.headers['x-proxy-appended-data'], '{"fromDefaultApi":true,"regexpRoute":true}');
+		});
+
+	});
+
+	describeRequest('GET', '/foo/REGEXP/bar', null, function () {
+
+		it('should respond with a 200 status', function () {
+			assert.strictEqual(this.lastResponse.statusCode, 200);
+		});
+
+		it('should respond with the expected body', function () {
+			assert.strictEqual(this.lastResponseBody, 'RegExp 3');
+		});
+
+		it('should send the API append data to the backend', function () {
+			var backendRequest = this.testApps.backendDefault.lastRequest;
+			assert.strictEqual(backendRequest.headers['x-proxy-appended-data'], '{"fromDefaultApi":true,"regexpRoute":true}');
+		});
+
+	});
+
+});
+
+
 describe('Thundermole ➞ Test API ➞ Test Backend', function () {
 
 	describeRequest('GET', '/test', null, function () {

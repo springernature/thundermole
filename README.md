@@ -78,7 +78,29 @@ mole.listen(3000);
 
 #### `routes` (object)
 
-Required. A simple routing hash. Each property maps to the first part of a request path, and the value should indicate the API endpoint to use for matching requests.
+Required. A simple routing hash. Each property maps to the first part of a request path, and the value should indicate the API endpoint to use for matching requests. For example:
+
+```json
+{
+    "foo": "http://my-api/"
+}
+```
+
+Routes can also be regular expressions which gives you a little more flexibility. The URL path of the request is tested against, and has the preceeding slash stripped. It's worth noting that backslashes need to be escaped as we're working in JSON:
+
+```json
+{
+    "/foo\\/bar/i": "http://my-api/"
+}
+```
+
+Also regular expression routes do *not* match from the start and end of the path – you'll need to manually specify that:
+
+```json
+{
+    "/^foo$/i": "http://my-api/"
+}
+```
 
 #### `routes.default` (string)
 
