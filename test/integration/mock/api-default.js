@@ -18,6 +18,17 @@ function startApiDefault (testAppsConfig, done) {
 			}));
 		},
 
+		'/api/regexp': function (request, response) {
+			response.writeHead(200);
+			response.end(JSON.stringify({
+				target: testAppsConfig.addresses.backendDefault,
+				append: {
+					fromDefaultApi: true,
+					regexpRoute: true
+				}
+			}));
+		},
+
 		'/api/redirect': function (request, response) {
 			response.writeHead(200);
 			response.end(JSON.stringify({

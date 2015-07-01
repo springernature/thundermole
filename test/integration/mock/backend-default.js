@@ -21,6 +21,21 @@ function startBackendDefault (testAppsConfig, done) {
 			response.end('Hello From Backend Default!');
 		},
 
+		'/regexp': function (request, response) {
+			response.writeHead(200);
+			response.end('RegExp 1');
+		},
+
+		'/xxregexpxx': function (request, response) {
+			response.writeHead(200);
+			response.end('RegExp 2');
+		},
+
+		'/foo/REGEXP/bar': function (request, response) {
+			response.writeHead(200);
+			response.end('RegExp 3');
+		},
+
 		'/redirected': function (request, response) {
 			response.writeHead(200);
 			response.end('You got redirected!');
