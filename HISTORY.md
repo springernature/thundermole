@@ -1,6 +1,10 @@
 
 # History
 
+## 0.5.0 pre-release (2015-07-01)
+
+  * Support regular expressions in API routing
+
 ## 0.4.0 pre-release (2015-06-22)
 
   * Add support for 307 redirects
