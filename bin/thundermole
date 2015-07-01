@@ -47,7 +47,6 @@ function defaultProgramProperties (program) {
 }
 
 function createLogger (syslogConfig) {
-	var syslogConfig = tryRequire(path.join(program.config, 'syslog.json'));
 	var logger = new winston.Logger({
 		transports: [
 			new (winston.transports.Console)(),
