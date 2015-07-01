@@ -86,11 +86,19 @@ Required. A simple routing hash. Each property maps to the first part of a reque
 }
 ```
 
-Routes can also be regular expressions which gives you a little more flexibility. It's worth noting that backslashes need to be escaped as we're working in JSON:
+Routes can also be regular expressions which gives you a little more flexibility. The URL path of the request is tested against, and has the preceeding slash stripped. It's worth noting that backslashes need to be escaped as we're working in JSON:
 
 ```json
 {
-    "/foo\\/bar/i": "http://my-api"
+    "/foo\\/bar/i": "http://my-api/"
+}
+```
+
+Also regular expression routes do *not* match from the start and end of the path – you'll need to manually specify that:
+
+```json
+{
+    "/^foo$/i": "http://my-api/"
 }
 ```
 
