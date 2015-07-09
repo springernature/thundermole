@@ -16,8 +16,3 @@ script: make ci
 # Send notifications to the FEDs slack channel
 notifications:
   slack: thefeds:vG3hLYB07EwTYpQFp3TNUx82
-
-# Cache node modules between runs
-cache:
-  directories:
-    - node_modules
