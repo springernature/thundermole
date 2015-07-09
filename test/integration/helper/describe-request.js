@@ -13,7 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Thundermole.  If not, see <http://www.gnu.org/licenses/>.
 
-/* global beforeEach, describe */
 'use strict';
 
 var request = require('request');

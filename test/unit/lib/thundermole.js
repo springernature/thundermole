@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Thundermole.  If not, see <http://www.gnu.org/licenses/>.
 
-/* jshint maxstatements: false, maxlen: false */
-/* global beforeEach, describe, it */
+// jshint maxstatements: false
+// jscs:disable disallowMultipleVarDecl, maximumLineLength
 'use strict';
 
 var assert = require('proclaim');
@@ -98,7 +98,7 @@ describe('lib/thundermole', function () {
 		});
 
 		it('should have a `pingUrl` property', function () {
-		    assert.isNull(defaults.pingUrl);
+			assert.isNull(defaults.pingUrl);
 		});
 
 	});

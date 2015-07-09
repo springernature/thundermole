@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Thundermole.  If not, see <http://www.gnu.org/licenses/>.
 
-/* jshint maxstatements: false, maxlen: false */
-/* global before */
+// jshint maxstatements: false
+// jscs:disable disallowMultipleVarDecl, maximumLineLength
 'use strict';
 
 var async = require('async');
