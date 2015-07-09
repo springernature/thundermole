@@ -1,6 +1,12 @@
 
 # History
 
+## 0.6.0 pre-release (2015-07-09)
+
+  * License under GPL-3.0
+  * Update the documentation
+  * Check code-style with JSCS
+
 ## 0.5.0 pre-release (2015-07-01)
 
   * Support regular expressions in API routing
