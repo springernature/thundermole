@@ -159,7 +159,8 @@ make
 License
 -------
 
-Copyright &copy; Nature Publishing Group
+Copyright 2015 Nature Publishing Group.  
+Thundermole is licensed under the [GNU General Public License 3.0][info-license].
 
 
 
@@ -167,3 +168,5 @@ Copyright &copy; Nature Publishing Group
 [node]: https://nodejs.org/
 [node-statsd]: https://github.com/sivy/node-statsd
 [winston-syslog]: https://github.com/winstonjs/winston-syslog
+
+[info-license]: LICENSE

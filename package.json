@@ -5,6 +5,7 @@
 
 	"description": "Proxy or redirect requests to different applications based on an API response",
 	"keywords": [ "api", "router", "proxy" ],
+
 	"author": "Nature Publishing Group",
 	"contributors": [
 		"Rowan Manning (http://rowanmanning.com/)"
@@ -16,7 +17,7 @@
 	},
 	"homepage": "https://github.com/nature/thundermole",
 	"bugs": "https://github.com/nature/thundermole/issues",
-	"license": "MIT",
+	"license": "GPL-3.0",
 
 	"engines": {
 		"node": ">=0.10"
