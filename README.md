@@ -17,7 +17,7 @@ Table Of Contents
 -----------------
 
 - [Installing](#installing)
-- [Running](#running)
+- [Running](#running-thundermole)
 - [JavaScript Interface](#javascript-interface)
 - [Examples](#running-example-applications)
 - [API Specification](#building-thundermole-compatible-apis)
