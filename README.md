@@ -4,7 +4,25 @@ Thundermole
 
 Proxy or redirect requests to different applications based on an API response.
 
+[![NPM version][shield-npm]][info-npm]
+[![Node.js version support][shield-node]][info-node]
+[![Build status][shield-build]][info-build]
+[![Dependencies][shield-dependencies]][info-dependencies]
+[![GPLv3 licensed][shield-license]][info-license]
+
 ![Thundermole Flow Diagram](docs/Diagram.png?raw=true)
+
+
+Table Of Contents
+-----------------
+
+- [Installing](#installing)
+- [Running](#running)
+- [JavaScript Interface](#javascript-interface)
+- [Examples](#running-example-applications)
+- [API Specification](#building-thundermole-compatible-apis)
+- [Contributing](#contributing)
+- [License](#license)
 
 
 Installing
@@ -53,8 +71,8 @@ Optional. Should contain statsd configurations as outlined in the [statsd option
 Should contain syslog configurations as outlined in the [winston-syslog documentation][winston-syslog]. See [`syslog.sample.json`](/config/syslog.sample.json) for an example.
 
 
-JavaScript API
---------------
+JavaScript Interface
+--------------------
 
 Thundermole can be loaded as a module and run programatically.
 
@@ -146,13 +164,15 @@ Building Thundermole-Compatible APIs
 In order for Thundermole to be able to communicate with your API, you'll need to follow the [API Specification](/docs/API-Specification.md).
 
 
-Testing
--------
+Contributing
+------------
 
-Lint the JavaScript and run the test suite:
+To contribute to Thundermole, clone this repo locally and commit your code on a separate branch.
 
-```
-make
+Please write unit tests for your code, and check that everything works by running the following before opening a pull-request:
+
+```sh
+make ci
 ```
 
 
@@ -169,4 +189,13 @@ Thundermole is licensed under the [GNU General Public License 3.0][info-license]
 [node-statsd]: https://github.com/sivy/node-statsd
 [winston-syslog]: https://github.com/winstonjs/winston-syslog
 
+[info-dependencies]: https://gemnasium.com/nature/thundermole
 [info-license]: LICENSE
+[info-node]: package.json
+[info-npm]: https://www.npmjs.com/package/thundermole
+[info-build]: https://travis-ci.org/nature/thundermole
+[shield-dependencies]: https://img.shields.io/gemnasium/nature/thundermole.svg
+[shield-license]: https://img.shields.io/badge/license-GPLv3-blue.svg
+[shield-node]: https://img.shields.io/node/v/thundermole.svg?label=node.js%20support
+[shield-npm]: https://img.shields.io/npm/v/thundermole.svg
+[shield-build]: https://img.shields.io/travis/nature/thundermole/master.svg
