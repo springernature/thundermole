@@ -2,7 +2,7 @@
 Thundermole
 ===========
 
-Proxy or redirect requests to different applications based on an API response.
+Proxy or redirect requests to different applications based on an API response. [Read about how we use it][cruft-post].
 
 [![NPM version][shield-npm]][info-npm]
 [![Node.js version support][shield-node]][info-node]
@@ -184,6 +184,7 @@ Thundermole is licensed under the [GNU General Public License 3.0][info-license]
 
 
 
+[cruft-post]: http://cruft.io/posts/complex-routing-logic-with-thundermole/
 [foreman]: https://github.com/ddollar/foreman
 [node]: https://nodejs.org/
 [node-statsd]: https://github.com/sivy/node-statsd
