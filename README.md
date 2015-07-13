@@ -179,7 +179,7 @@ make ci
 License
 -------
 
-Copyright 2015 Nature Publishing Group.  
+Copyright &copy; 2015 Nature Publishing Group.  
 Thundermole is licensed under the [GNU General Public License 3.0][info-license].
 
 
