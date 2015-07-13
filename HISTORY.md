@@ -1,6 +1,10 @@
 
 # History
 
+## 1.0.0 (2015-07-13)
+
+  * Stable public release
+
 ## 0.6.0 pre-release (2015-07-09)
 
   * License under GPL-3.0
