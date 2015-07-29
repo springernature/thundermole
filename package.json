@@ -25,14 +25,14 @@
 		"commander": "~2.8",
 		"http-proxy": "~1.11",
 		"node-statsd": "~0.1",
-		"request": "~2.58",
+		"request": "~2.60",
 		"underscore": "^1",
 		"winston": "~1.0",
 		"winston-syslog": "~1.1"
 	},
 	"devDependencies": {
 		"async": "^1",
-		"jscs": "^1",
+		"jscs": "^2",
 		"jshint": "^2",
 		"mocha": "^2",
 		"mockery": "~1.4",
