@@ -11,7 +11,7 @@ Endpoints
 APIs should have a single `GET` endpoint. Thundermole will make a request like this:
 
 ```
-GET /path/to?resource={resource_path} HTTP/1.1
+GET /path/to?method={method}&resource={resource_path} HTTP/1.1
 Host: example.com
 Accept: application/json
 Connection: keep-alive
@@ -19,6 +19,8 @@ Cookie: {cookie}
 ```
 
 In this request:
+
+`{method}` will be set to the method of original request that came into Thundermole. e.g. `GET` or `POST`.
 
 `{resource_path}` will be set to the full path of the original request that came into Thundermole. This will include query parameters which can be parsed by the API.
 

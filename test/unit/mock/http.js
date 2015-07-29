@@ -23,7 +23,8 @@ var clientRequest = {
 };
 
 var incomingMessage = {
-	headers: {}
+	headers: {},
+	method: 'GET'
 };
 
 var serverResponse = {
