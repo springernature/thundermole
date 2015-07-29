@@ -19,6 +19,7 @@
 
 var assert = require('proclaim');
 var describeRequest = require('./helper/describe-request');
+var url = require('url');
 
 describe('Thundermole ➞ Default API ➞ Default Backend', function () {
 
@@ -51,11 +52,29 @@ describe('Thundermole ➞ Default API ➞ Default Backend', function () {
 
 	});
 
+	describeRequest('GET', '/foo', null, function () {
+
+		it('should send the request method to the API', function () {
+			var query = url.parse(this.testApps.apiDefault.lastRequest.url, true).query;
+			assert.strictEqual(query.method, 'GET');
+		});
+
+	});
+
+	describeRequest('POST', '/foo', null, function () {
+
+		it('should send the request method to the API', function () {
+			var query = url.parse(this.testApps.apiDefault.lastRequest.url, true).query;
+			assert.strictEqual(query.method, 'POST');
+		});
+
+	});
+
 	describeRequest('GET', '/foo?bar=baz', null, function () {
 
 		it('should send the full path to the API', function () {
-			var apiRequest = this.testApps.apiDefault.lastRequest;
-			assert.strictEqual(apiRequest.url, '/api/routing?resource=%2Ffoo%3Fbar%3Dbaz');
+			var query = url.parse(this.testApps.apiDefault.lastRequest.url, true).query;
+			assert.strictEqual(query.resource, '/foo?bar=baz');
 		});
 
 	});
@@ -211,11 +230,29 @@ describe('Thundermole ➞ Test API ➞ Test Backend', function () {
 
 	});
 
+	describeRequest('GET', '/test/foo', null, function () {
+
+		it('should send the request method to the API', function () {
+			var query = url.parse(this.testApps.apiTest.lastRequest.url, true).query;
+			assert.strictEqual(query.method, 'GET');
+		});
+
+	});
+
+	describeRequest('POST', '/test/foo', null, function () {
+
+		it('should send the request method to the API', function () {
+			var query = url.parse(this.testApps.apiTest.lastRequest.url, true).query;
+			assert.strictEqual(query.method, 'POST');
+		});
+
+	});
+
 	describeRequest('GET', '/test/foo?bar=baz', null, function () {
 
 		it('should send the full path to the API', function () {
-			var apiRequest = this.testApps.apiTest.lastRequest;
-			assert.strictEqual(apiRequest.url, '/api/routing?resource=%2Ftest%2Ffoo%3Fbar%3Dbaz');
+			var query = url.parse(this.testApps.apiTest.lastRequest.url, true).query;
+			assert.strictEqual(query.resource, '/test/foo?bar=baz');
 		});
 
 	});
