@@ -1,6 +1,10 @@
 
 # History
 
+## 1.0.0 (2015-07-29)
+
+  * Send the original request method through to the API for use in routing
+
 ## 1.0.0 (2015-07-13)
 
   * Stable public release
