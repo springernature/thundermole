@@ -25,7 +25,7 @@
 		"commander": "~2.8",
 		"http-proxy": "~1.11",
 		"node-statsd": "~0.1",
-		"request": "~2.60",
+		"request": "~2.61",
 		"underscore": "^1",
 		"winston": "~1.0",
 		"winston-syslog": "~1.1"
