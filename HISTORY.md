@@ -1,6 +1,10 @@
 
 # History
 
+## 1.2.0 (2015-09-30)
+
+  * Send the original host header through to the API for use in routing
+
 ## 1.1.0 (2015-07-29)
 
   * Send the original request method through to the API for use in routing
