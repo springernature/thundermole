@@ -156,6 +156,7 @@ describe('lib/api', function () {
 			incomingRequest = new http.IncomingMessage();
 			incomingRequest.url = 'http://example.com/foo/bar?baz=qux';
 			incomingRequest.headers.cookie = 'cookies!';
+			incomingRequest.headers.host = 'example.com';
 			incomingRequest.method = 'POST';
 			routes = {
 				foo: 'foo-route'
@@ -185,6 +186,10 @@ describe('lib/api', function () {
 
 			it('should have a `qs.method` property set to the method of the original request', function () {
 				assert.strictEqual(builtRequest.qs.method, 'POST');
+			});
+
+			it('should have a `qs.host` property set to the host header from the original request', function () {
+				assert.strictEqual(builtRequest.qs.host, 'example.com');
 			});
 
 			it('should have a `qs.resource` property set to the path/query of the original request', function () {
