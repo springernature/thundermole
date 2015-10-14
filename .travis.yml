@@ -1,18 +1,44 @@
 
-# Run tests in Node.js 0.10 and 0.12
+# Build matrix
 language: node_js
-node_js:
-  - "0.10"
-  - "0.12"
+matrix:
+  include:
 
-# Build only master (and pull-requests)
+    # Lint only in Node.js 0.10
+    - node_js: '0.10'
+      env: LINT=true
+
+    # Run tests in Node.js 0.10
+    - node_js: '0.10'
+
+    # Run tests in Node.js 0.12
+    - node_js: '0.12'
+
+    # Run tests in Node.js 4.x (dependencies require GCC 4.8)
+    - node_js: '4'
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-4.8
+            - g++-4.8
+
+# Restrict builds on branches
 branches:
   only:
     - master
+    - /^\d+\.\d+\.\d+$/
+
+# Before install
+before_install:
+  # Use GCC 4.8 if it's available
+  - 'if [ ! `which gcc-4.8` == "" ]; then export CXX=g++-4.8 && export CC=gcc-4.8; fi'
+  # Install coveralls
+  - npm install coveralls
 
 # Build script
-script: make ci
-
-# Send notifications to the FEDs slack channel
-notifications:
-  slack: thefeds:vG3hLYB07EwTYpQFp3TNUx82
+script:
+  - 'if [ $LINT ]; then make lint; fi'
+  - 'if [ ! $LINT ]; then make test-coverage; fi'
+  - 'if [ ! $LINT ]; then cat ./coverage/lcov.info | ./node_modules/.bin/coveralls; fi'

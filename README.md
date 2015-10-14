@@ -197,6 +197,6 @@ Thundermole is licensed under the [GNU General Public License 3.0][info-license]
 [info-build]: https://travis-ci.org/nature/thundermole
 [shield-dependencies]: https://img.shields.io/gemnasium/nature/thundermole.svg
 [shield-license]: https://img.shields.io/badge/license-GPLv3-blue.svg
-[shield-node]: https://img.shields.io/node/v/thundermole.svg?label=node.js%20support
+[shield-node]: https://img.shields.io/badge/node.js%20support-0.10–4-brightgreen.svg
 [shield-npm]: https://img.shields.io/npm/v/thundermole.svg
 [shield-build]: https://img.shields.io/travis/nature/thundermole/master.svg
