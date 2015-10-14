@@ -1,6 +1,12 @@
 
 # History
 
+## 1.2.1 (2015-10-14)
+
+  * Support Node.js 4.x
+  * Add code-coverage reporting
+  * Update dependencies
+
 ## 1.2.0 (2015-09-30)
 
   * Send the original host header through to the API for use in routing
