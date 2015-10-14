@@ -22,12 +22,12 @@
 		"node": ">=0.10"
 	},
 	"dependencies": {
-		"commander": "~2.8",
+		"commander": "~2.9",
 		"http-proxy": "~1.11",
 		"node-statsd": "~0.1",
-		"request": "~2.61",
+		"request": "~2.65",
 		"underscore": "^1",
-		"winston": "~1.0",
+		"winston": "~1.1",
 		"winston-syslog": "~1.1"
 	},
 	"devDependencies": {
