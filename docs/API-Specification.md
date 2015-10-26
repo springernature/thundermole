@@ -11,11 +11,12 @@ Endpoints
 APIs should have a single `GET` endpoint. Thundermole will make a request like this:
 
 ```
-GET /path/to?method={method}&resource={resource_path}&host={host} HTTP/1.1
+GET /path/to?method={method}&resource={resource_path}&host={host}&useragent={useragent} HTTP/1.1
 Host: example.com
 Accept: application/json
 Connection: keep-alive
 Cookie: {cookie}
+User-Agent: Thundermole/{version}
 ```
 
 In this request:
@@ -24,9 +25,13 @@ In this request:
 
 `{resource_path}` will be set to the full path of the original request that came into Thundermole. This will include query parameters which can be parsed by the API.
 
-`{host}` will be set to the host header of the original request that came in to Thundermole.
+`{host}` will be set to the `Host` header of the original request that came in to Thundermole.
+
+`{useragent}` will be set to the `User-Agent` header of the original request that came in to Thundermole.
 
 `{cookie}` will be set to the `Cookie` header of the original request that came into Thundermole, unchanged.
+
+`{version}` will be set to the version of Thundermole that is making the request.
 
 
 Responses

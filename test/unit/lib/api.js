@@ -19,6 +19,7 @@
 
 var assert = require('proclaim');
 var mockery = require('mockery');
+var pkg = require('../../../package.json');
 var sinon = require('sinon');
 
 describe('lib/api', function () {
@@ -157,6 +158,7 @@ describe('lib/api', function () {
 			incomingRequest.url = 'http://example.com/foo/bar?baz=qux';
 			incomingRequest.headers.cookie = 'cookies!';
 			incomingRequest.headers.host = 'example.com';
+			incomingRequest.headers['user-agent'] = 'UA';
 			incomingRequest.method = 'POST';
 			routes = {
 				foo: 'foo-route'
@@ -188,12 +190,16 @@ describe('lib/api', function () {
 				assert.strictEqual(builtRequest.qs.method, 'POST');
 			});
 
-			it('should have a `qs.host` property set to the host header from the original request', function () {
+			it('should have a `qs.host` property set to the Host header from the original request', function () {
 				assert.strictEqual(builtRequest.qs.host, 'example.com');
 			});
 
 			it('should have a `qs.resource` property set to the path/query of the original request', function () {
 				assert.strictEqual(builtRequest.qs.resource, '/foo/bar?baz=qux');
+			});
+
+			it('should have a `qs.useragent` property set to the User-Agent header of the original request', function () {
+				assert.strictEqual(builtRequest.qs.useragent, 'UA');
 			});
 
 			it('should have a `headers` property set to an object', function () {
@@ -206,6 +212,10 @@ describe('lib/api', function () {
 
 			it('should have a `headers.Cookie` property set to the cookies from the original request', function () {
 				assert.deepEqual(builtRequest.headers.Cookie, 'cookies!');
+			});
+
+			it('should have a `headers[\'User-Agent\']` property set to "Thundermole/<version>"', function () {
+				assert.deepEqual(builtRequest.headers['User-Agent'], 'Thundermole/' + pkg.version);
 			});
 
 			it('should have a `json` property set to `true`', function () {

@@ -88,6 +88,15 @@ describe('Thundermole ➞ Default API ➞ Default Backend', function () {
 
 	});
 
+	describeRequest('GET', '/', {'User-Agent': 'foo'}, function () {
+
+		it('should send the `User-Agent` header to the API', function () {
+			var query = url.parse(this.testApps.apiDefault.lastRequest.url, true).query;
+			assert.strictEqual(query.useragent, 'foo');
+		});
+
+	});
+
 	describeRequest('GET', '/headers', null, function () {
 
 		it('should respond with a 200 status', function () {
