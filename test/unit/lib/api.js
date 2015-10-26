@@ -19,6 +19,7 @@
 
 var assert = require('proclaim');
 var mockery = require('mockery');
+var pkg = require('../../../package.json');
 var sinon = require('sinon');
 
 describe('lib/api', function () {
@@ -206,6 +207,10 @@ describe('lib/api', function () {
 
 			it('should have a `headers.Cookie` property set to the cookies from the original request', function () {
 				assert.deepEqual(builtRequest.headers.Cookie, 'cookies!');
+			});
+
+			it('should have a `headers[\'User-Agent\']` property set to "Thundermole/<version>"', function () {
+				assert.deepEqual(builtRequest.headers['User-Agent'], 'Thundermole/' + pkg.version);
 			});
 
 			it('should have a `json` property set to `true`', function () {

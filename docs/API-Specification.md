@@ -16,6 +16,7 @@ Host: example.com
 Accept: application/json
 Connection: keep-alive
 Cookie: {cookie}
+User-Agent: Thundermole/{version}
 ```
 
 In this request:
@@ -27,6 +28,8 @@ In this request:
 `{host}` will be set to the host header of the original request that came in to Thundermole.
 
 `{cookie}` will be set to the `Cookie` header of the original request that came into Thundermole, unchanged.
+
+`{version}` will be set to the version of Thundermole that is making the request.
 
 
 Responses
