@@ -1,6 +1,11 @@
 
 # History
 
+## 1.3.0 (2015-10-26)
+
+  * Send a User-Agent header to the API
+  * Send the original User-Agent header to the API for use in routing
+
 ## 1.2.1 (2015-10-14)
 
   * Support Node.js 4.x
