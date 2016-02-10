@@ -1,6 +1,11 @@
 
 # History
 
+## 1.3.1 (2016-02-10)
+
+  * Update repository references to springernature
+  * Update the license
+
 ## 1.3.0 (2015-10-26)
 
   * Send a User-Agent header to the API
