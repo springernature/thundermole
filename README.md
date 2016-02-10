@@ -179,7 +179,7 @@ make ci
 License
 -------
 
-Copyright &copy; 2015 Nature Publishing Group.  
+Copyright &copy; 2015 Springer Nature.  
 Thundermole is licensed under the [GNU General Public License 3.0][info-license].
 
 
@@ -190,13 +190,13 @@ Thundermole is licensed under the [GNU General Public License 3.0][info-license]
 [node-statsd]: https://github.com/sivy/node-statsd
 [winston-syslog]: https://github.com/winstonjs/winston-syslog
 
-[info-dependencies]: https://gemnasium.com/nature/thundermole
+[info-dependencies]: https://gemnasium.com/springernature/thundermole
 [info-license]: LICENSE
 [info-node]: package.json
 [info-npm]: https://www.npmjs.com/package/thundermole
-[info-build]: https://travis-ci.org/nature/thundermole
-[shield-dependencies]: https://img.shields.io/gemnasium/nature/thundermole.svg
+[info-build]: https://travis-ci.org/springernature/thundermole
+[shield-dependencies]: https://img.shields.io/gemnasium/springernature/thundermole.svg
 [shield-license]: https://img.shields.io/badge/license-GPLv3-blue.svg
 [shield-node]: https://img.shields.io/badge/node.js%20support-0.10–4-brightgreen.svg
 [shield-npm]: https://img.shields.io/npm/v/thundermole.svg
-[shield-build]: https://img.shields.io/travis/nature/thundermole/master.svg
+[shield-build]: https://img.shields.io/travis/springernature/thundermole/master.svg
