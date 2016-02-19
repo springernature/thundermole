@@ -26,6 +26,7 @@ function startMole (testAppsConfig, done) {
 			incorrect: testAppsConfig.addresses.apiDefault + '/api/incorrect',
 			error: testAppsConfig.addresses.apiDefault + '/api/error',
 			notfound: testAppsConfig.addresses.apiDefault + '/api/notfound',
+			'set-headers': testAppsConfig.addresses.apiDefault + '/api/set-headers',
 			redirect: testAppsConfig.addresses.apiDefault + '/api/redirect',
 			'/regexp/i': testAppsConfig.addresses.apiDefault + '/api/regexp',
 			default: testAppsConfig.addresses.apiDefault + '/api/routing'
