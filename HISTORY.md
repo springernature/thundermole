@@ -1,6 +1,10 @@
 
 # History
 
+## 1.4.0 (2016-02-22)
+
+  * Allow an API to send extra headers to a proxy target
+
 ## 1.3.1 (2016-02-10)
 
   * Update repository references to springernature
