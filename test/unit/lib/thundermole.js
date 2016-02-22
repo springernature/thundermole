@@ -256,6 +256,16 @@ describe('lib/thundermole', function () {
 				assert.isTrue(proxyRequest.setHeader.withArgs('X-Proxy-Appended-Data', '{}').calledOnce);
 			});
 
+			it('should set custom headers if `proxyOptions.set_headers` is set', function () {
+				proxyOptions.set_headers = {
+					'X-Foo': 'bar',
+					'X-Bar': 'baz'
+				};
+				proxyReqHandler(proxyRequest, request, response, proxyOptions);
+				assert.isTrue(proxyRequest.setHeader.withArgs('X-Foo', 'bar').calledOnce);
+				assert.isTrue(proxyRequest.setHeader.withArgs('X-Bar', 'baz').calledOnce);
+			});
+
 		});
 
 		it('should add a handler for the HTTP proxy "proxyRes" event', function () {
@@ -387,15 +397,39 @@ describe('lib/thundermole', function () {
 						assert.isTrue(instance.proxy.web.withArgs(request, response).calledOnce);
 					});
 
-					it('should pass the proxy the API response `target` and `append` properties', function () {
+					it('should pass the proxy the API response `target`, `append`, and `set_headers` properties', function () {
 						assert.deepEqual(instance.proxy.web.withArgs(request, response).firstCall.args[2], {
 							target: apiResponse.target,
-							append: apiResponse.append
+							append: apiResponse.append,
+							set_headers: undefined
 						});
 					});
 
 					it('should not pass the proxy any additional API response properties', function () {
 						assert.isUndefined(instance.proxy.web.withArgs(request, response).firstCall.args[2].nonStandardProperty);
+					});
+
+				});
+
+				describe('when API call is successful (and responds with headers to set)', function () {
+
+					beforeEach(function () {
+						apiResponse = {
+							target: 'foo-target',
+							append: {},
+							set_headers: {
+								'X-Foo': 'bar',
+								'X-Bar': 'baz'
+							}
+						};
+						apiResponseHandler(null, apiResponse);
+					});
+
+					it('should pass the proxy the API response with the expected `set_headers` property', function () {
+						assert.deepEqual(instance.proxy.web.withArgs(request, response).firstCall.args[2].set_headers, {
+							'X-Foo': 'bar',
+							'X-Bar': 'baz'
+						});
 					});
 
 				});

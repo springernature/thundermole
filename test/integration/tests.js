@@ -114,6 +114,24 @@ describe('Thundermole ➞ Default API ➞ Default Backend', function () {
 
 	});
 
+	describeRequest('GET', '/set-headers', null, function () {
+
+		it('should respond with a 200 status', function () {
+			assert.strictEqual(this.lastResponse.statusCode, 200);
+		});
+
+		it('should respond with the expected body', function () {
+			assert.strictEqual(this.lastResponseBody, 'Hello with added headers!');
+		});
+
+		it('should send the expected additional headers to the back-end', function () {
+			var backendRequest = this.testApps.backendDefault.lastRequest;
+			assert.strictEqual(backendRequest.headers['x-foo'], 'bar');
+			assert.strictEqual(backendRequest.headers['x-bar'], 'baz');
+		});
+
+	});
+
 	describeRequest('GET', '/400', null, function () {
 
 		it('should respond with a 400 status', function () {

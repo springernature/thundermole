@@ -47,6 +47,9 @@ Content-Type: application/json; charset=utf-8
     "target": "{target_url}",
     "append": {
         "{append_property}": "{append_value}"
+    },
+    "set_headers": {
+        "{header_name}": "{header_value}"
     }
 }
 ```
@@ -72,5 +75,7 @@ In these responses:
 `{redirect_type}` is the redirect status code to use when Thundermole redirects. It is optional, and will default to `301`. This should be a number, not a string, and only `301`, `302`, `303`, and `307` values are accepted.
 
 The `append` property should be an object that will be passed onto the target application in the `X-Proxy-Appended-Data` header, serialized as JSON. Append data is only used when proxying, not redirecting.
+
+The `set_headers` property is optional, and should be either `undefined` or an object that will be passed onto the target application as additional headers. Set headers data is only used when proxying, not redirecting.
 
 Any extra headers or body properties will be ignored.

@@ -44,6 +44,18 @@ function startApiDefault (testAppsConfig, done) {
 			}));
 		},
 
+		'/api/set-headers': function (request, response) {
+			response.writeHead(200);
+			response.end(JSON.stringify({
+				target: testAppsConfig.addresses.backendDefault,
+				append: {},
+				set_headers: {
+					'X-Foo': 'bar',
+					'X-Bar': 'baz'
+				}
+			}));
+		},
+
 		'/api/redirect': function (request, response) {
 			response.writeHead(200);
 			response.end(JSON.stringify({

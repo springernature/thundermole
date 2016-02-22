@@ -36,6 +36,11 @@ function startBackendDefault (testAppsConfig, done) {
 			response.end('Hello From Backend Default!');
 		},
 
+		'/set-headers': function (request, response) {
+			response.writeHead(200);
+			response.end('Hello with added headers!');
+		},
+
 		'/regexp': function (request, response) {
 			response.writeHead(200);
 			response.end('RegExp 1');

@@ -101,6 +101,13 @@ describe('lib/api', function () {
 				assert.isTrue(callback.withArgs(null, apiResponseBody).calledOnce);
 			});
 
+			it('should call the callback with no error and the response body as an object if `set_headers` is present and valid', function () {
+				apiResponseBody.set_headers = {};
+				responseHandler(null, apiResponse, apiResponseBody);
+				assert.isTrue(callback.calledOnce);
+				assert.isTrue(callback.withArgs(null, apiResponseBody).calledOnce);
+			});
+
 			it('should call the callback with an error if error is non-null', function () {
 				var error = new Error();
 				responseHandler(error, apiResponse, apiResponseBody);
@@ -140,6 +147,14 @@ describe('lib/api', function () {
 				assert.isTrue(callback.calledOnce);
 				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
 				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) response redirect_type property is invalid. Should be 301, 302, 303, or 307');
+			});
+
+			it('should call the callback with an error if the `set_headers` property is invalid', function () {
+				apiResponseBody.set_headers = null;
+				responseHandler(null, apiResponse, apiResponseBody);
+				assert.isTrue(callback.calledOnce);
+				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
+				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) response set_headers property is not an object');
 			});
 
 		});
