@@ -121,7 +121,7 @@ describe('lib/api', function () {
 				responseHandler(null, apiResponse, apiResponseBody);
 				assert.isTrue(callback.calledOnce);
 				assert.isTrue(callback.withArgs(new Error(), apiResponseBody).calledOnce);
-				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) responded with a non-200 status code');
+				assert.strictEqual(callback.firstCall.args[0].message, 'API (foo) responded with a non-200 status code: 404');
 			});
 
 			it('should call the callback with an error if the response body is not an object', function () {
