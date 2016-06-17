@@ -1,6 +1,12 @@
 
 # History
 
+## 1.5.0 (2016-06-17)
+
+  * Return a Bad Gateway instead of Internal Server Error for proxy connection errors
+  * Graph proxy responses by status code
+  * Log the status code returned for an API error
+
 ## 1.4.0 (2016-02-22)
 
   * Allow an API to send extra headers to a proxy target
