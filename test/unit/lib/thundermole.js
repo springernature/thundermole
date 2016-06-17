@@ -299,6 +299,16 @@ describe('lib/thundermole', function () {
 				assert.isTrue(instance.statsd.timing.withArgs('proxy_response_time', 100).calledOnce);
 			});
 
+			it('should increment the `proxy_response_404` statistic on 404 responses', function () {
+				response.writeHead(404);
+				assert.isTrue(instance.statsd.increment.withArgs('proxy_response_404').calledOnce);
+			});
+
+			it('should increment the `proxy_response_500` statistic on 500 responses', function () {
+				response.writeHead(500);
+				assert.isTrue(instance.statsd.increment.withArgs('proxy_response_500').calledOnce);
+			});
+
 		});
 
 		it('should add a handler for the HTTP proxy "error" event', function () {
@@ -321,10 +331,14 @@ describe('lib/thundermole', function () {
 				assert.isTrue(instance.statsd.increment.withArgs('proxy_error').calledOnce);
 			});
 
-			it('should respond with a `500` status code', function () {
-				assert.isTrue(response.writeHead.withArgs(500).calledOnce);
-				assert.isObject(response.writeHead.withArgs(500).firstCall.args[1]);
-				assert.strictEqual(response.writeHead.withArgs(500).firstCall.args[1]['Content-Type'], 'text/html');
+			it('should increment the `proxy_response_502` statistic', function () {
+				assert.isTrue(instance.statsd.increment.withArgs('proxy_response_502').calledOnce);
+			});
+
+			it('should respond with a `502` status code', function () {
+				assert.isTrue(response.writeHead.withArgs(502).calledOnce);
+				assert.isObject(response.writeHead.withArgs(502).firstCall.args[1]);
+				assert.strictEqual(response.writeHead.withArgs(502).firstCall.args[1]['Content-Type'], 'text/html');
 			});
 
 			it('should end the response', function () {
