@@ -453,6 +453,7 @@ describe('lib/thundermole', function () {
 					beforeEach(function () {
 						apiResponse = {
 							redirect: 'foo-redirect',
+							set_headers: {foo: 'bar'},
 							redirect_type: 303
 						};
 						apiResponseHandler(null, apiResponse);
@@ -477,6 +478,19 @@ describe('lib/thundermole', function () {
 						assert.isTrue(response.writeHead.withArgs(301).calledOnce);
 						assert.isObject(response.writeHead.firstCall.args[1]);
 						assert.strictEqual(response.writeHead.firstCall.args[1].Location, 'foo-redirect');
+						assert.isTrue(response.end.calledOnce);
+					});
+
+					it('should pass the `set_headers` API repsonse on with the redirect', function () {
+						underscore.extend.returnsArg(1);
+						response.writeHead.reset();
+						response.end.reset();
+						apiResponseHandler(null, apiResponse);
+						assert.strictEqual(underscore.extend.firstCall.args[0].Location, 'foo-redirect');
+						assert.strictEqual(underscore.extend.firstCall.args[1].foo, 'bar');
+						assert.isTrue(response.writeHead.withArgs(303).calledOnce);
+						assert.isObject(response.writeHead.firstCall.args[1]);
+						assert.strictEqual(response.writeHead.firstCall.args[1].foo, 'bar');
 						assert.isTrue(response.end.calledOnce);
 					});
 
