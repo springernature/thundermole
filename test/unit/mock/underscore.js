@@ -18,5 +18,6 @@
 var sinon = require('sinon');
 
 module.exports = {
-	defaults: sinon.stub().returnsArg(1)
+	defaults: sinon.stub().returnsArg(1),
+	extend: sinon.stub().returnsArg(0)
 };
