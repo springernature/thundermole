@@ -1,6 +1,10 @@
 
 # History
 
+## 1.6.0 (2016-08-17)
+
+  * Allow extra headers returned from the API to be used in redirects
+
 ## 1.5.0 (2016-06-17)
 
   * Return a Bad Gateway instead of Internal Server Error for proxy connection errors
