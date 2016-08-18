@@ -24,21 +24,21 @@
 	},
 	"dependencies": {
 		"commander": "~2.9",
-		"http-proxy": "~1.11",
+		"http-proxy": "~1.14",
 		"http-status-codes": "1.0.6",
 		"node-statsd": "~0.1",
-		"request": "~2.65",
+		"request": "~2.74",
 		"underscore": "^1",
-		"winston": "~1.1",
-		"winston-syslog": "~1.1"
+		"winston": "~2.2",
+		"winston-syslog": "~1.2"
 	},
 	"devDependencies": {
-		"async": "^1",
-		"istanbul": "~0.3",
-		"jscs": "^2",
+		"async": "^2",
+		"istanbul": "~0.4",
+		"jscs": "^3",
 		"jshint": "^2",
-		"mocha": "^2",
-		"mockery": "~1.4",
+		"mocha": "^3",
+		"mockery": "~1.7",
 		"proclaim": "^3",
 		"sinon": "^1"
 	},
