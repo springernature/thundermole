@@ -1,13 +1,14 @@
 {
 	"name": "thundermole",
-	"version": "1.6.0",
+	"version": "1.6.1",
 
 	"description": "Proxy or redirect requests to different applications based on an API response",
 	"keywords": [ "api", "router", "proxy" ],
 
 	"author": "Springer Nature",
 	"contributors": [
-		"Rowan Manning (http://rowanmanning.com/)"
+		"Rowan Manning (http://rowanmanning.com/)",
+		"Andrew Walker (http://www.moddular.org/)"
 	],
 
 	"repository": {

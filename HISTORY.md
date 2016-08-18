@@ -1,6 +1,10 @@
 
 # History
 
+## 1.6.1 (2016-08-18)
+
+  * Update API Specification to document the new `set_headers` behaviour
+
 ## 1.6.0 (2016-08-17)
 
   * Allow extra headers returned from the API to be used in redirects
