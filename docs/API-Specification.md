@@ -76,6 +76,6 @@ In these responses:
 
 The `append` property should be an object that will be passed onto the target application in the `X-Proxy-Appended-Data` header, serialized as JSON. Append data is only used when proxying, not redirecting.
 
-The `set_headers` property is optional, and should be either `undefined` or an object that will be passed onto the target application as additional headers. Set headers data is only used when proxying, not redirecting.
+The `set_headers` property is optional and should be either `undefined` or an object. This object will populate additional HTTP headers that are either proxied to the target application, or returned to the client in the case of a redirect.
 
 Any extra headers or body properties will be ignored.
