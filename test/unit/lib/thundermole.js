@@ -395,6 +395,11 @@ describe('lib/thundermole', function () {
 				describe('when API call is successful', function () {
 
 					beforeEach(function () {
+						request.headers = {
+							'x-forwarded-for': '127.0.0.1',
+							cookie: 'name=value',
+							host: 'www.nature.com'
+						};
 						createTimer.firstCall.returnValue.end.returns(100);
 						apiResponseHandler(null, apiResponse);
 					});
@@ -409,6 +414,10 @@ describe('lib/thundermole', function () {
 
 					it('should proxy the original request', function () {
 						assert.isTrue(instance.proxy.web.withArgs(request, response).calledOnce);
+					});
+
+					it('should log the request headers except for cookies', function () {
+						assert.isTrue(instance.logger.info.calledWith('Request headers: %s', 'x-forwarded-for=127.0.0.1,host=www.nature.com'));
 					});
 
 					it('should pass the proxy the API response `target`, `append`, and `set_headers` properties', function () {
