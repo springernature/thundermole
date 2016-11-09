@@ -1,6 +1,11 @@
 
 # History
 
+## 1.6.2 (2016-11-09)
+
+  * Log request headers when proxying
+  * Update some dependencies
+
 ## 1.6.1 (2016-08-18)
 
   * Update API Specification to document the new `set_headers` behaviour
