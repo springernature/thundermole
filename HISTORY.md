@@ -1,6 +1,12 @@
 
 # History
 
+## 1.6.5 (2017-02-15)
+
+  * Switch statsd client
+  * Log data appended to the proxy request
+  * Log requests to the ping endpoint
+
 ## 1.6.2 (2016-11-09)
 
   * Log request headers when proxying
