@@ -36,7 +36,8 @@
     "mocha": "^3.5.0",
     "mockery": "^1.7.0",
     "proclaim": "^3.4.5",
-    "sinon": "^1.0.0"
+    "sinon": "^1.0.0",
+    "snyk": "^1.38.1"
   },
   "main": "./lib/thundermole.js",
   "bin": {
@@ -44,6 +45,7 @@
   },
   "scripts": {
     "start": "./bin/thundermole",
-    "test": "make ci"
+    "lint": "make lint",
+    "test": "snyk test && make ci"
   }
 }

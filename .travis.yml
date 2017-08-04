@@ -37,5 +37,9 @@ before_install:
 
 # Build script
 script:
-  - 'if [ $LINT ]; then make lint; fi'
-  - 'if [ ! $LINT ]; then make test-coverage; fi'
+  - 'if [ $LINT ]; then npm run lint; fi'
+  - 'if [ ! $LINT ]; then npm run test; fi'
+
+# Updates the dashboard after a successful deployment
+after_success:
+  - snyk monitor --org=springernature
