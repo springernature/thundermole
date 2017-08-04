@@ -1,6 +1,6 @@
 {
   "name": "thundermole",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "description": "Proxy or redirect requests to different applications based on an API response",
   "keywords": [ "api", "router", "proxy" ],
   "author": "Springer Nature",
