@@ -1,6 +1,14 @@
 
 # History
 
+## 1.6.6 (2017-08-04)
+
+  * Update dependencies which fixes vulnerability in tunnel-agent: https://snyk.io/vuln/npm:tunnel-agent:20170305
+  * Make build scripts more consistent with best practices
+  * Add `snyk test` and `snyk monitor` to build process
+  * Remove unused coveralls config
+  * Cleanup and indent editorconfig and package.json files
+
 ## 1.6.5 (2017-02-15)
 
   * Switch statsd client
