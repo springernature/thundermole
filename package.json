@@ -44,6 +44,7 @@
   },
   "scripts": {
     "start": "./bin/thundermole",
-    "test": "make ci"
+    "lint": "make lint",
+    "test": "snyk test && make ci"
   }
 }
